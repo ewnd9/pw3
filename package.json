@@ -1,0 +1,17 @@
+{
+  "name": "pw3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "lodash": "^3.2.0",
+    "prompt": "^0.2.14",
+    "thepiratebay": "^0.1.2"
+  }
+}
