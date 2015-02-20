@@ -2,6 +2,8 @@ var _ = require('lodash');
 var tpb = require('thepiratebay');
 var prompt = require('prompt');
 var Table = require('cli-table');
+var sys = require('sys');
+var exec = require('child_process').exec;
 
 var table = new Table({
   head: ['#', 'Name', 'Size', 'Stats']
@@ -11,7 +13,9 @@ var result = [];
 
 process.stdin.on('data', function (text) {
   var index = parseInt(text);
-  console.log(result[index - 1]);
+  var r = result[index - 1];
+  console.log(r);
+  exec('transmission-gtk "' + r.magnetLink + '"');
   process.exit();
 });
 
