@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var _ = require('lodash');
 var tpb = require('thepiratebay');
 var prompt = require('prompt');
