@@ -7,6 +7,7 @@ var Table = require('cli-table');
 var sys = require('sys');
 var exec = require('child_process').exec;
 
+var argv = require('minimist')(process.argv.slice(2));
 var table = new Table({
   head: ['#', 'Name', 'Size', 'Stats']
 });
@@ -21,15 +22,29 @@ process.stdin.on('data', function (text) {
   process.exit();
 });
 
-tpb.search(process.argv.splice(2).join(' ')).then(function(results) {
-  result = results;
+var filterBySubstrings = function(results, substrings) {
+  return _.filter(results, function(val) {
+    var item = _.find(substrings, function(substring) {
+      return val.name.indexOf(substring) === -1;
+    });
+
+    return typeof item === 'undefined';
+  });
+};
+
+tpb.search(argv['_'].join(' ')).then(function(results) {
+  if (argv['c']) {
+    result = filterBySubstrings(results, argv['c'].split(','));
+  } else {
+    result = results;
+  }
 
   if (result.length === 0) {
     console.log('0 results');
     process.exit();
   }
 
-  _.each(results, function(val, i) {
+  _.each(result, function(val, i) {
     table.push(
       [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
     );
