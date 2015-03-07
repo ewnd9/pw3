@@ -12,6 +12,7 @@
     "cli-table": "^0.3.1",
     "lodash": "^3.2.0",
     "minimist": "^1.1.0",
+    "node-kickass": "^0.2.0",
     "prompt": "^0.2.14",
     "q": "^1.1.2",
     "thepiratebay": "^0.1.2"

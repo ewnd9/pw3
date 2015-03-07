@@ -29,7 +29,7 @@ process.stdin.on('data', function (text) {
   var index = parseInt(text);
   var r = result[index - 1];
   console.log('running: ' + r.name);
-  exec('transmission-gtk "' + r.magnetLink + '"');
+  exec('transmission-gtk "' + r.magnet + '"');
 
   ioLoop(true);
 });
@@ -44,20 +44,19 @@ var filterBySubstrings = function(results, substrings) {
   });
 };
 
-var search = function(query) {
-  var deferred = Q.defer();
+var adapters = {
+  tpb: require('./src/tpb-adapter'),
+  kickass: require('./src/kickass-adapter')
+}
 
-  tpb.search(query).then(function(results) {
+var search = function(query) {
+  return adapters[argv['adapter'] || 'tpb'].query(query).then(function(results) {
     if (argv['c']) {
       results = filterBySubstrings(results, argv['c'].split(','));
     }
 
-    deferred.resolve(results);
-  }).catch(function(err){
-    deferred.reject(err);
+    return results;
   });
-
-  return deferred.promise;
 };
 
 var query = argv['_'].join(' ');
