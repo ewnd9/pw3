@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config.json');
+
 var _ = require('lodash');
 var tpb = require('thepiratebay');
 var prompt = require('prompt');
@@ -28,8 +30,11 @@ var ioLoop = function(hideTable) {
 process.stdin.on('data', function (text) {
   var index = parseInt(text);
   var r = result[index - 1];
-  console.log('running: ' + r.name);
-  exec('transmission-gtk "' + r.magnet + '"');
+
+  var command = config.data.exec.replace('$torrent', r.magnet);
+
+  console.log('running "' + r.name + '":\n' + command);
+  exec(command);
 
   ioLoop(true);
 });
