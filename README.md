@@ -2,9 +2,17 @@
 
 simple torrent trackers cli
 
-# usage
+## Installation
 
-node index.js <search_query>
+```
+$ npm install -g pw3
+```
+
+## Usage
+
+```
+$ pw3 <search_query>
+```
 
 __Command-line flags/options:__
 

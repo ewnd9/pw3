@@ -1,7 +1,7 @@
 {
   "name": "pw3",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "simple torrent trackers cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,12 @@
   "bin": {
     "pw3": "./index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewnd9/pw3.git"
+  },
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "cli-table": "^0.3.1",
     "lodash": "^3.2.0",
