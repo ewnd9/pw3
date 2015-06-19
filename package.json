@@ -23,6 +23,6 @@
     "node-kickass": "^0.2.0",
     "prompt": "^0.2.14",
     "q": "^1.1.2",
-    "thepiratebay": "^0.1.2"
+    "thepiratebay": "git://github.com/ewnd9/thepiratebay"
   }
 }
