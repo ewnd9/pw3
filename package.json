@@ -1,6 +1,6 @@
 {
   "name": "pw3",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "simple torrent trackers cli",
   "main": "index.js",
   "scripts": {
