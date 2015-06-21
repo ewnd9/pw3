@@ -1,6 +1,6 @@
 # pw3
 
-simple torrent trackers cli
+simple torrent trackers and imdb cli
 
 ## Installation
 
@@ -16,11 +16,20 @@ $ pw3 <search_query>
 
 __Range queries:__
 
+Combines responses from `daredevil s01e01 720p`, `daredevil s01e02 720p`, ..., `daredevil s01e05 720p`
+
 ```
 $ pw3 daredevil s01e01-05 720p
 ```
 
-Current query combines responses from `daredevil s01e01 720p`, `daredevil s01e02 720p`, ..., `daredevil s01e05 720p`
+__Search info on imdb:__
+
+Shows rating, description, seasons with dates.
+
+```
+$ pw3 info daredevil
+```
+
 
 __Command-line flags/options:__
 
