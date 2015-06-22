@@ -41,7 +41,7 @@ __Setting up torrent client:__
 
 To change program which should open magnet-link edit config file `~/.pw3-npm`
 
-Default is `transmission-gtk \"$torrent\"`
+Default is `transmission-gtk "$torrent"`
 
 ## Similar Projects
 
