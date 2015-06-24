@@ -3,8 +3,14 @@
 var argv = require('minimist')(process.argv.slice(2));
 args = argv['_'] || [];
 
-if (argv.setup === true) {
-  require('./lib/setup-task.js')();
+var isFirstRun = false; // dot-file-config logic error :(
+
+var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config.json', function() {
+  isFirstRun = true;
+});
+
+if (isFirstRun || argv.setup === true) {
+  require('./lib/setup-task.js')(config);
 } else if (argv.adapter) {
   require('./lib/search-task.js').search(argv.adapter);
 } else if (args[0] === 'info') {

@@ -1,3 +1,23 @@
 {
-  "exec": "transmission-gtk \"$torrent\""
+  "preferences": {
+
+  },
+  "adapters": [
+    "tpb",
+    "kickass"
+  ],
+  "available-programs": [
+    {
+      "name": "transmission-gtk",
+      "script": "transmission-gtk \"$arg\"",
+      "description": "Default ubuntu app",
+      "type": "exec"
+    },
+    {
+      "name": "peerflix",
+      "script": "peerflix \"$arg\" --vlc",
+      "description": "Torrent-streaming https://github.com/mafintosh/peerflix",
+      "type": "replace"
+    }
+  ]
 }

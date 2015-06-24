@@ -17,14 +17,16 @@
   "license": "MIT",
   "dependencies": {
     "cli-table": "^0.3.1",
-    "dot-file-config": "0.0.1",
+    "dot-file-config": "0.0.2",
     "inquirer": "^0.8.5",
+    "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "minimist": "^1.1.0",
     "node-kickass": "^0.2.0",
     "prompt": "^0.2.14",
     "q": "^1.1.2",
     "request-promise": "^0.4.2",
+    "spawn-args": "^0.1.0",
     "thepiratebay": "^0.2.2"
   }
 }

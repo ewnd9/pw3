@@ -8,13 +8,19 @@ simple torrent trackers and imdb cli
 $ npm install -g pw3
 ```
 
+There are setup dialog on first run (setting up default tracker and torrent client), later can be run again by
+
+```
+$ pw3 --setup
+```
+
 ## Usage
 
 ```
 $ pw3 <search_query>
 ```
 
-__Range queries:__
+### Range queries
 
 Combines responses from `daredevil s01e01 720p`, `daredevil s01e02 720p`, ..., `daredevil s01e05 720p`
 
@@ -22,7 +28,7 @@ Combines responses from `daredevil s01e01 720p`, `daredevil s01e02 720p`, ..., `
 $ pw3 daredevil s01e01-05 720p
 ```
 
-__Search info on imdb:__
+### Search info on imdb
 
 Shows rating, description, seasons with dates.
 
@@ -30,18 +36,39 @@ Shows rating, description, seasons with dates.
 $ pw3 info daredevil
 ```
 
-
-__Command-line flags/options:__
+### Command-line flags/options
 
 [--adapter]  torrent tracker ('tpb' - thepiratebay.se, 'kickass' - kickass.to), default is 'tpb'
 
 [--c] substring which name of torrent should contains
 
-__Setting up torrent client:__
+### Default config
 
-To change program which should open magnet-link edit config file `~/.pw3-npm`
+```json
+{
+  "preferences": {
 
-Default is `transmission-gtk \"$torrent\"`
+  },
+  "adapters": [
+    "tpb",
+    "kickass"
+  ],
+  "available-programs": [
+    {
+      "name": "transmission-gtk",
+      "script": "transmission-gtk \"$arg\"",
+      "description": "Default ubuntu app",
+      "type": "exec"
+    },
+    {
+      "name": "peerflix",
+      "script": "peerflix \"$arg\" --vlc",
+      "description": "Torrent-streaming https://github.com/mafintosh/peerflix",
+      "type": "replace"
+    }
+  ]
+}
+```
 
 ## Similar Projects
 
