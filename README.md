@@ -8,7 +8,7 @@ simple torrent trackers and imdb cli
 $ npm install -g pw3
 ```
 
-There are setup dialog on first run (setting up default tracker and torrent client), later can be run again by
+There is setup dialog on first run (setting up default tracker and torrent client), later can be run again by
 
 ```
 $ pw3 --setup
