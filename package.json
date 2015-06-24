@@ -16,6 +16,7 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.0.0",
     "cli-table": "^0.3.1",
     "dot-file-config": "0.0.2",
     "inquirer": "^0.8.5",
