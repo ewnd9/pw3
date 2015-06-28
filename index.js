@@ -16,6 +16,8 @@ if (isFirstRun || argv.setup === true) {
 } else if (args[0] === 'info') {
   args.splice(0, 1);
   require('./lib/info-task.js').search(args.join(' '));
+} else if (args[0] === 'timeline') {
+  require('./lib/timeline-task.js').run(config);
 } else {
   require('inquirer').prompt({
     type: "list",

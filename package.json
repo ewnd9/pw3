@@ -16,6 +16,8 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^2.9.30",
+    "chai": "^3.0.0",
     "chalk": "^1.0.0",
     "cli-table": "^0.3.1",
     "dot-file-config": "0.0.2",
@@ -23,6 +25,7 @@
     "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "minimist": "^1.1.0",
+    "mocha": "^2.2.5",
     "moment": "^2.10.3",
     "node-kickass": "^0.2.0",
     "prompt": "^0.2.14",
