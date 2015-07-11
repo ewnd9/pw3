@@ -1,5 +1,3 @@
-var config = require('dot-file-config')('.pw3-npm', __dirname + '/../default-config.json');
-
 var _ = require('lodash');
 var tpb = require('thepiratebay');
 var prompt = require('prompt');
@@ -11,10 +9,10 @@ var processUtils = require('./utils/process-utils');
 var nlpUtils = require('./utils/nlp-utils');
 var print = require('./utils/print-utils');
 
-var search = function(adapter) {
+module.exports.run = function(config, adapter, query, options) {
   adapter = adapter || 'tpb';
+  options = options || {};
 
-  var argv = require('minimist')(process.argv.slice(2));
   var table = new Table({
     head: ['#', 'Name', 'Size', 'Stats']
   });
@@ -35,16 +33,24 @@ var search = function(adapter) {
     var index = parseInt(text);
     var r = result[index - 1];
 
-    var program = _.find(config.data['available-programs'], function(program) {
-      return program.name === config.data['preferences']['program'];
-    });
+    if (r) {
+      var program = _.find(config.data['available-programs'], function(program) {
+        return program.name === config.data['preferences']['program'];
+      });
 
-    print.info(program);
+      print.info(program);
 
-    var script = program.script.replace('$arg', r.magnet);
+      var script = program.script.replace('$arg', r.magnet);
 
-    print.info('running "' + r.name + '"');
-    processUtils[program.type](script);
+      print.info('running "' + r.name + '"');
+      processUtils[program.type](script);
+
+      if (r.description.queryMatches) {
+        require('./helpers/history-storage').process(config, r.description.queryMatches);
+      }
+    } else {
+      print.info('wrong input');
+    }
 
     ioLoop(true);
   });
@@ -64,72 +70,70 @@ var search = function(adapter) {
     kickass: require('./adapters/kickass-adapter')
   }
 
-  var search = function(query) {
+  var search = function(query, description) {
     return adapters[adapter].query(query).then(function(results) {
-      if (argv['c']) {
-        results = filterBySubstrings(results, argv['c'].split(','));
+      if (options['c']) {
+        results = filterBySubstrings(results, options['c'].split(','));
       }
 
-      return results;
+      return _.map(results, (result) => {
+        result.description = description || {};
+        return result;
+      });
     });
   };
-
-  var query = argv['_'].join(' ');
 
   var tr = function(s, n) {
     return (s.length >= n) ? s : tr('0' + s, n);
   };
 
-  var xs = null;
-  var found = nlpUtils.parseEpisodesRange(query);
+  var searchRequests = null;
+  var rangeQuery = nlpUtils.parseEpisodesRange(query);
 
-  if (found) {
-    xs = _.map(_.range(found.from, found.to + 1), function(i) {
-      return search(query.replace(found.expr, 'e' + tr(i + '', 2)));
+  if (rangeQuery) {
+    searchRequests = _.map(_.range(rangeQuery.from, rangeQuery.to + 1), function(i) {
+      var currQuery = query.replace(rangeQuery.expr, 'e' + tr(i + '', 2));
+
+      return search(currQuery, {
+        episode: i,
+        queryMatches: nlpUtils.parseQuery(currQuery)
+      });
     });
   } else {
-    xs = [search(query)];
+    searchRequests = [search(query), {
+      queryMatches: nlpUtils.parseQuery(query)
+    }];
   }
 
-  var queryMatches = nlpUtils.parseQuery(query);
-  if (queryMatches) {
-    config.data.preferences.searches = config.data.preferences.searches || [];
-    var last = _.find(config.data.preferences.searches, function(item) {
-      return item.title === queryMatches.title;
-    });
-
-    if (last) {
-      if (queryMatches.s > last.s) {
-        last.s = queryMatches.s;
-        last.ep = queryMatches.ep;
-      } else if (queryMatches.ep > last.ep) {
-        last.ep = queryMatches.ep;
-      }
-    } else {
-      config.data.preferences.searches.push(queryMatches);
-    }
-
-    config.save();
-  }
-
-  return Q.all(xs).then(function(results) {
+  return Q.all(searchRequests).then(function(results) {
     result = _.flatten(results);
+    var i = 0;
 
-    if (result.length === 0) {
+    if (results.length === 0) {
       print.info('0 results');
       process.exit();
     }
 
-    _.each(result, function(val, i) {
-      table.push(
-        [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
-      );
+    _.each(results, function(response, j) {
+
+      if (j > 0) {
+        table.push(['', '---']);
+      }
+
+      if (response.length === 0) {
+        table.push(['', '--- no results ---']);
+      }
+
+      _.each(response, (val) => {
+        table.push(
+          [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
+        );
+
+        i = i + 1;
+      });
+
     });
 
     ioLoop();
   });
-};
-
-module.exports = {
-  search: search
 };

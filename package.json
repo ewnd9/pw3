@@ -2,28 +2,28 @@
   "name": "pw3",
   "version": "0.0.5",
   "description": "torrent trackers cli",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile",
     "prestart": "npm run compile",
-    "start": "node index.js",
+    "start": "node lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "pw3": "./index.js"
+    "pw3": "./lib/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ewnd9/pw3.git"
   },
   "keywords": [
-		"torrent",
-		"imdb",
-		"movies",
-		"tv",
-		"shows",
-		"cli"
+    "torrent",
+    "imdb",
+    "movies",
+    "tv",
+    "shows",
+    "cli"
   ],
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
@@ -31,8 +31,9 @@
     "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
     "cli-table": "^0.3.1",
-    "dot-file-config": "0.0.2",
+    "dot-file-config": "0.0.3",
     "inquirer": "^0.8.5",
+    "inquirer-bluebird": "^1.0.1",
     "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "minimist": "^1.1.0",

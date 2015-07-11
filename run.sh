@@ -1,4 +1,4 @@
 #!/bin/sh
 
 npm run compile
-./index.js "$@"
+node lib/index.js "$@"

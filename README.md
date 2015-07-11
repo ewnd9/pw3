@@ -73,13 +73,14 @@ $ pw3 info daredevil
 ## Roadmap
 
 - Subtitles Loader
+- Confirmation of checking tv-show progress
 - Dates in torrent-trackers
 - Dates with Day of Week
 - Trakt.tv integration
 - `overview` command, list of all remembered shows with seasons beginning and end dates
 - `--help` command, also show if no input
 - Something about making want-to-watch list
-- Add channels in timeline
+- Add tv-networks in timeline
 - Split info cli and lib packages
 - https://github.com/sindresorhus/pretty-bytes for formatting bytes
 

@@ -2,6 +2,10 @@ var request = require('request-promise');
 var _ = require('lodash');
 var moment = require('moment');
 
+var tr = function(n) {
+  return n < 10 ? '0' + n : '' + n;
+};
+
 var parse = function(item) {
   return {
     imdb: item.idIMDB,
@@ -14,12 +18,21 @@ var parse = function(item) {
     isShow: item.type === 'TV Series',
     seasons: _.map(item.seasons, function(season) {
       var episodes = _.map(season.episodes, function(episode) {
+        var s = season.numSeason;
+        var numericSeason = tr(s);
+        var numericEpisode = tr(episode.episode);
+        var numericTitle = numericSeason + 'x' + numericEpisode;
+
         return {
           title: episode.title,
           episode: episode.episode,
           date: episode.date,
-          season: season.numSeason,
-          _date: moment(episode.date, 'D MMMM YYYY')
+          season: s,
+          numericSeason: numericSeason,
+          numericEpisode: numericEpisode,
+          numericTitle: numericTitle,
+          fullTitle: numericTitle + ' ' + episode.title,
+          _date: moment(episode.date.replace('.', ''), 'D MMM YYYY', true)
         };
       });
 
