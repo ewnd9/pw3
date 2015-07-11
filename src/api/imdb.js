@@ -1,10 +1,8 @@
-'use strict';
-
 var request = require('request-promise');
 var _ = require('lodash');
 var moment = require('moment');
 
-var parse = function parse(item) {
+var parse = function(item) {
   return {
     imdb: item.idIMDB,
     title: item.title,
@@ -14,8 +12,8 @@ var parse = function parse(item) {
     rating: item.rating,
     isMovie: item.type !== 'TV Series',
     isShow: item.type === 'TV Series',
-    seasons: _.map(item.seasons, function (season) {
-      var episodes = _.map(season.episodes, function (episode) {
+    seasons: _.map(item.seasons, function(season) {
+      var episodes = _.map(season.episodes, function(episode) {
         return {
           title: episode.title,
           episode: episode.episode,
@@ -32,30 +30,31 @@ var parse = function parse(item) {
         to: _.last(episodes).date
       };
     })
-  };
+  }
 };
 
-module.exports.search = function (query) {
+module.exports.search = function(query) {
   var params = {
     title: query,
-    limit: 10 };
+    limit: 10,
+  };
 
-  return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function (body) {
+  return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function(body) {
     var data = JSON.parse(body);
-    return _.map(data, function (item) {
+    return _.map(data, function(item) {
       return parse(item);
     });
   });
 };
 
-module.exports.searchByImdb = function (imdb) {
+module.exports.searchByImdb = function(imdb) {
   var params = {
     idIMDB: imdb,
     limit: 1,
     seasons: 1
   };
 
-  return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function (body) {
+  return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function(body) {
     var data = JSON.parse(body);
     return parse(data);
   });

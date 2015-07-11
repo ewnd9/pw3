@@ -1,5 +1,3 @@
-'use strict';
-
 var config = require('dot-file-config')('.pw3-npm', __dirname + '/../default-config.json');
 
 var _ = require('lodash');
@@ -13,7 +11,7 @@ var processUtils = require('./utils/process-utils');
 var nlpUtils = require('./utils/nlp-utils');
 var print = require('./utils/print-utils');
 
-var search = function search(adapter) {
+var search = function(adapter) {
   adapter = adapter || 'tpb';
 
   var argv = require('minimist')(process.argv.slice(2));
@@ -23,7 +21,7 @@ var search = function search(adapter) {
 
   var result = [];
 
-  var ioLoop = function ioLoop(hideTable) {
+  var ioLoop = function(hideTable) {
     if (!hideTable) {
       print.info(table.toString());
     }
@@ -37,7 +35,7 @@ var search = function search(adapter) {
     var index = parseInt(text);
     var r = result[index - 1];
 
-    var program = _.find(config.data['available-programs'], function (program) {
+    var program = _.find(config.data['available-programs'], function(program) {
       return program.name === config.data['preferences']['program'];
     });
 
@@ -51,9 +49,9 @@ var search = function search(adapter) {
     ioLoop(true);
   });
 
-  var filterBySubstrings = function filterBySubstrings(results, substrings) {
-    return _.filter(results, function (val) {
-      var item = _.find(substrings, function (substring) {
+  var filterBySubstrings = function(results, substrings) {
+    return _.filter(results, function(val) {
+      var item = _.find(substrings, function(substring) {
         return val.name.indexOf(substring) === -1;
       });
 
@@ -64,10 +62,10 @@ var search = function search(adapter) {
   var adapters = {
     tpb: require('./adapters/tpb-adapter'),
     kickass: require('./adapters/kickass-adapter')
-  };
+  }
 
-  var search = function search(query) {
-    return adapters[adapter].query(query).then(function (results) {
+  var search = function(query) {
+    return adapters[adapter].query(query).then(function(results) {
       if (argv['c']) {
         results = filterBySubstrings(results, argv['c'].split(','));
       }
@@ -78,29 +76,15 @@ var search = function search(adapter) {
 
   var query = argv['_'].join(' ');
 
-  var tr = function tr(_x, _x2) {
-    var _again = true;
-
-    _function: while (_again) {
-      var s = _x,
-          n = _x2;
-      _again = false;
-      if (s.length >= n) {
-        return s;
-      } else {
-        _x = '0' + s;
-        _x2 = n;
-        _again = true;
-        continue _function;
-      }
-    }
+  var tr = function(s, n) {
+    return (s.length >= n) ? s : tr('0' + s, n);
   };
 
   var xs = null;
   var found = nlpUtils.parseEpisodesRange(query);
 
   if (found) {
-    xs = _.map(_.range(found.from, found.to + 1), function (i) {
+    xs = _.map(_.range(found.from, found.to + 1), function(i) {
       return search(query.replace(found.expr, 'e' + tr(i + '', 2)));
     });
   } else {
@@ -110,7 +94,7 @@ var search = function search(adapter) {
   var queryMatches = nlpUtils.parseQuery(query);
   if (queryMatches) {
     config.data.preferences.searches = config.data.preferences.searches || [];
-    var last = _.find(config.data.preferences.searches, function (item) {
+    var last = _.find(config.data.preferences.searches, function(item) {
       return item.title === queryMatches.title;
     });
 
@@ -128,7 +112,7 @@ var search = function search(adapter) {
     config.save();
   }
 
-  return Q.all(xs).then(function (results) {
+  return Q.all(xs).then(function(results) {
     result = _.flatten(results);
 
     if (result.length === 0) {
@@ -136,8 +120,10 @@ var search = function search(adapter) {
       process.exit();
     }
 
-    _.each(result, function (val, i) {
-      table.push([i + 1 + '', val.name, val.size, val.seeders + '/' + val.leechers]);
+    _.each(result, function(val, i) {
+      table.push(
+        [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
+      );
     });
 
     ioLoop();

@@ -1,6 +1,4 @@
-"use strict";
-
-module.exports.parseQuery = function (query) {
+module.exports.parseQuery = function(query) {
   var regex = /(.+)[sS]([\d]+)[eE]([\d]+)/;
   var found = query.match(regex);
 
@@ -11,7 +9,7 @@ module.exports.parseQuery = function (query) {
   } : null;
 };
 
-module.exports.parseEpisodesRange = function (query) {
+module.exports.parseEpisodesRange = function(query) {
   var regex = /[eE]([\d]+)(\-([\d]+))?/;
   var found = query.match(regex);
 

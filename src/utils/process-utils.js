@@ -1,11 +1,9 @@
-'use strict';
-
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var spawnargs = require('spawn-args');
 var kexec = require('kexec');
 
-module.exports.exec = function (cmd) {
+module.exports.exec = function(cmd) {
   console.log(cmd);
 
   return exec(cmd);
@@ -15,7 +13,7 @@ module.exports.exec = function (cmd) {
 //   throw new Error('not implemented');
 // };
 
-module.exports.replace = function (cmd) {
+module.exports.replace = function(cmd) {
   console.log(cmd);
 
   var args = spawnargs(cmd, { removequotes: true });

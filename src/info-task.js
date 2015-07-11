@@ -1,25 +1,23 @@
-'use strict';
-
 var imdb = require('./api/imdb');
 var print = require('./utils/print-utils');
 
-module.exports.search = function (query) {
+module.exports.search = function(query) {
   var _ = require('lodash');
 
-  imdb.search(query).then(function (data) {
+  imdb.search(query).then(function(data) {
     var inquirer = require('inquirer');
 
     inquirer.prompt({
-      type: 'list',
-      name: 'movie',
-      message: 'Select title',
-      choices: _.map(data, function (item) {
+      type: "list",
+      name: "movie",
+      message: "Select title",
+      choices: _.map(data, function(item) {
         return {
           name: item.title + ' (' + item.year + ')',
           value: item
-        };
+        }
       }).concat(new inquirer.Separator(), 'Exit')
-    }, function (answers) {
+    }, function(answers) {
       var m = answers.movie;
 
       if (m === 'Exit') {
@@ -30,11 +28,11 @@ module.exports.search = function (query) {
         print.kv('description', m.description);
 
         inquirer.prompt({
-          type: 'list',
-          name: 'action',
-          message: 'Select action',
+          type: "list",
+          name: "action",
+          message: "Select action",
           choices: (m.isShow ? ['Seasons'] : []).concat(['Exit'])
-        }, function (answers) {
+        }, function(answers) {
           var a = answers.action;
           if (a === 'Seasons') {
             showSeasons(m);
@@ -45,19 +43,19 @@ module.exports.search = function (query) {
       }
     });
 
-    var showSeasons = function showSeasons(m) {
-      imdb.searchByImdb(m.imdb).then(function (data) {
+    var showSeasons = function(m) {
+      imdb.searchByImdb(m.imdb).then(function(data) {
         inquirer.prompt({
-          type: 'list',
-          name: 'season',
-          message: 'Select season',
-          choices: _.map(data.seasons.reverse(), function (season) {
+          type: "list",
+          name: "season",
+          message: "Select season",
+          choices: _.map(data.seasons.reverse(), function(season) {
             return {
               name: 'Season ' + season.season + ' (' + season.from + ' - ' + season.to + ')',
               value: season
             };
           })
-        }, function (answers) {
+        }, function(answers) {
           var s = answers.season;
           print.splitByToday(s.episodes.reverse());
 

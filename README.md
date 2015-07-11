@@ -1,6 +1,6 @@
 # pw3
 
-simple torrent trackers and imdb cli
+Customizable torrent trackers and imdb cli
 
 ## Installation
 
@@ -70,7 +70,20 @@ $ pw3 info daredevil
 }
 ```
 
-## Similar Projects
+## Roadmap
+
+- Subtitles Loader
+- Dates in torrent-trackers
+- Dates with Day of Week
+- Trakt.tv integration
+- `overview` command, list of all remembered shows with seasons beginning and end dates
+- `--help` command, also show if no input
+- Something about making want-to-watch list
+- Add channels in timeline
+- Split info cli and lib packages
+- https://github.com/sindresorhus/pretty-bytes for formatting bytes
+
+## Alternatives
 
 - [lumus](https://github.com/ziacik/lumus)
 - [termflix](https://github.com/asarode/termflix)
