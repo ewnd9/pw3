@@ -114,25 +114,29 @@ module.exports.run = function(config, adapter, query, options) {
       process.exit();
     }
 
-    _.each(results, function(response, j) {
+    try {
+      _.each(results, function(response, j) {
 
-      if (j > 0) {
-        table.push(['', '---']);
-      }
+        if (j > 0) {
+          table.push(['', '---']);
+        }
 
-      if (response.length === 0) {
-        table.push(['', '--- no results ---']);
-      }
+        if (response.length === 0) {
+          table.push(['', '--- no results ---']);
+        }
 
-      _.each(response, (val) => {
-        table.push(
-          [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
-        );
+        _.each(response, (val) => {
+          table.push(
+            [(i + 1) + '', val.name, val.size, val.seeders + '/' + val.leechers]
+          );
 
-        i = i + 1;
+          i = i + 1;
+        });
+
       });
-
-    });
+    } catch (e) {
+      console.log(e);
+    }
 
     ioLoop();
   });

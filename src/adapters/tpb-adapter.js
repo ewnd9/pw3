@@ -1,5 +1,8 @@
 var Q = require('q');
+
 var tpb = require('thepiratebay');
+tpb.setUrl('http://thepiratebay.vg');
+
 var _ = require('lodash');
 
 var ReleaseModel = function(release) {

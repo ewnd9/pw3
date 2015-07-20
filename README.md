@@ -83,6 +83,8 @@ $ pw3 info daredevil
 - Add tv-networks in timeline
 - Split info cli and lib packages
 - https://github.com/sindresorhus/pretty-bytes for formatting bytes
+- Edit npm scripts (https://iamstarkov.com/fav-npm-scripts/)
+- Show error message on piratebay down
 
 ## Alternatives
 
