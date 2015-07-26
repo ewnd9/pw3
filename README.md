@@ -1,6 +1,8 @@
 # pw3
 
-Customizable torrent trackers and imdb cli
+[![Build Status](https://travis-ci.org/ewnd9/pw3.svg?branch=master)](https://travis-ci.org/ewnd9/pw3)
+
+Media Multiplexer in cli
 
 ## Installation
 
@@ -12,8 +14,6 @@ $ npm install -g pw3
 
 ```
 $ pw3 --help
-
-  Media Multiplexer
 
   Usage
     pw3 --setup
