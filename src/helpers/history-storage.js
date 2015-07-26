@@ -20,3 +20,25 @@ module.exports.process = (config, queryMatches) => {
 
   config.save();
 };
+
+module.exports.getImdb = (config, title) => {
+  var searches = config.data.preferences.searchesImdb = config.data.preferences.searchesImdb || [];
+  var last = _.find(searches, item => item.title === title);
+
+  return last;
+};
+
+module.exports.setImdb = (config, title, media) => {
+  var last = module.exports.getImdb(config, title);
+
+  if (last) {
+    last.media = media;
+  } else {
+    searches.push({
+      title: title,
+      media: media
+    });
+  }
+
+  config.save();
+};

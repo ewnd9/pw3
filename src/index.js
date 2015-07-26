@@ -33,7 +33,7 @@ if (isFirstRun || cli.flags.setup === true) {
   require('./search-task.js').search(cli.flags.adapter);
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
-  require('./info-task.js').search(cli.input.join(' '));
+  require('./info-task.js').search(config, cli.input.join(' '));
 } else if (cli.input[0] === 'subtitles') {
   cli.input.splice(0, 1);
 
@@ -42,7 +42,7 @@ if (isFirstRun || cli.flags.setup === true) {
     process.exit(1);
   }
 
-  require('./subtitles-task.js').run(cli.input.join(' '), cli.flags.lang);
+  require('./subtitles-task.js').run(config, cli.input.join(' '), cli.flags.lang);
 } else if (cli.input[0] === 'timeline') {
   require('./timeline-task.js').run(config);
 } else if (cli.input[0] === 'available') {

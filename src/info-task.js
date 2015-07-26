@@ -1,13 +1,13 @@
 var imdb = require('./api/imdb');
 var print = require('./utils/print-utils');
 
-module.exports.search = function(query) {
+module.exports.search = function(config, query) {
   var _ = require('lodash');
   var inquirer = require('inquirer-bluebird');
 
   var selectImdbTask = require('./helpers/select-imdb-task');
 
-  selectImdbTask.run(query).then((m) => {
+  selectImdbTask.run(config, query).then((m) => {
     if (m === 'Exit') {
       process.exit(0);
     } else {

@@ -1,4 +1,4 @@
-module.exports.run = (query, lang) => {
+module.exports.run = (config, query, lang) => {
   var Promise = require('bluebird');
   var opensrt = require('opensrt_js');
   var OpenSRT = Promise.promisifyAll(new opensrt('OSTestUserAgent')); // @TODO: new user agent
@@ -15,7 +15,7 @@ module.exports.run = (query, lang) => {
   var rangeQuery = nlpUtils.parseEpisodesRange(query);
   var queryMatches = nlpUtils.parseQuery(query);
 
-  selectImdbTask.run(queryMatches.title).then((media) => {
+  selectImdbTask.run(config, queryMatches.title).then((media) => {
     var fromEp = queryMatches.ep;
     var toEp = queryMatches.ep;
 
@@ -24,7 +24,7 @@ module.exports.run = (query, lang) => {
       toEp = rangeQuery.to;
     }
 
-    return Promise.reduce(_.range(fromEp, toEp + 1), function(total, ep) {
+    return Promise.reduce(_.range(fromEp, toEp + 1), (total, ep, index, arrayLength) => {
       var query = {
         imdbid: media.imdb,
         season: queryMatches.s,
@@ -41,16 +41,13 @@ module.exports.run = (query, lang) => {
         } else {
           return 'not found';
         }
-      }).then((file) => {
-        total[title] = file;
+      }).then((files) => {
+        total[title] = files;
+
+        print.kv(title, (files[0]) ? files[0].path : files);
+        print.info((index + 1) + ' / ' + arrayLength);
         return total;
       });
     }, {});
-  }).then((result) => {
-    _.each(result, (files, title) => {
-      print.kv(title, (files[0]) ? files[0].path : files);
-    });
   });
-
-
 };
