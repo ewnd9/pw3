@@ -8,32 +8,21 @@ Customizable torrent trackers and imdb cli
 $ npm install -g pw3
 ```
 
-There is setup dialog on first run (setting up default tracker and torrent client), later can be run again by
-
-```
-$ pw3 --setup
-```
-
 ## Usage
 
 ```
-$ pw3 <search_query>
-```
+$ pw3 --help
 
-### Range queries
+  Media Multiplexer
 
-Combines responses from `daredevil s01e01 720p`, `daredevil s01e02 720p`, ..., `daredevil s01e05 720p`
+  Usage
+    pw3 --setup
+    pw3 lost s01e01 720p
+    pw3 daredevil s01e01-05 720p # range queries
 
-```
-$ pw3 daredevil s01e01-05 720p
-```
-
-### Search info on imdb
-
-Shows rating, description, seasons with dates.
-
-```
-$ pw3 info daredevil
+    pw3 info "sillicon valley" # description, air date of episodes
+    pw3 timeline # all watching shows air dates
+    pw3 available # all watching shows available episodes
 ```
 
 ### Command-line flags/options

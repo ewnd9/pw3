@@ -1,7 +1,22 @@
 #!/usr/bin/env node
 
-var argv = require('minimist')(process.argv.slice(2));
-var args = argv['_'] || [];
+var meow = require('meow');
+var chalk = require('chalk');
+var comment = (input) => input; // there was chalk, but not sure how it will be displayed on different terminal color schemes
+
+var cli = meow({
+  help: [
+    'Usage',
+    '  pw3 --setup',
+    '  pw3 lost s01e01 720p',
+    ['  pw3 daredevil s01e01-05 720p', comment('# range queries')].join(' '),
+    '',
+    ['  pw3 info "sillicon valley"', comment('# description, air date of episodes')].join(' '),
+    ['  pw3 timeline', comment('# all watching shows air dates')].join(' '),
+    ['  pw3 available', comment('# all watching shows available episodes')].join(' ')
+  ],
+  pkg: '../package.json'
+});
 
 var isFirstRun = false; // dot-file-config logic error :(
 
@@ -9,24 +24,23 @@ var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config
   isFirstRun = true;
 });
 
-if (isFirstRun || argv.setup === true) {
+if (isFirstRun || cli.flags.setup === true) {
   require('./setup-task.js')(config);
-} else if (argv.adapter) {
-  require('./search-task.js').search(argv.adapter);
-} else if (args[0] === 'info') {
+} else if (cli.flags.adapter) {
+  require('./search-task.js').search(cli.flags.adapter);
+} else if (cli.input[0] === 'info') {
   args.splice(0, 1);
-  require('./info-task.js').search(args.join(' '));
-} else if (args[0] === 'timeline') {
+  require('./info-task.js').search(cli.input.join(' '));
+} else if (cli.input[0] === 'timeline') {
   require('./timeline-task.js').run(config);
-} else if (args[0] === 'available') {
+} else if (cli.input[0] === 'available') {
   require('./available-task.js').run(config);
-} else if (argv['_'].length === 0 || argv['_'].join('').trim().length === 0) {
-  console.log('empty input');
-  process.exit(1);
+} else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
+  cli.showHelp();
 } else {
   var adapter = config.data.preferences.adapter;
 
-  require('./search-task.js').run(config, adapter, argv['_'].join(' '), {
-    c: argv['c']
+  require('./search-task.js').run(config, adapter, cli.input.join(' '), {
+    c: cli.flags.c
   });
 }
