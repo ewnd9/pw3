@@ -1,6 +1,6 @@
 {
   "name": "pw3",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "torrent trackers cli",
   "scripts": {
     "transpile": "babel src --out-dir lib",
