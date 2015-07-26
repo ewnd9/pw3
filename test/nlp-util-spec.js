@@ -1,9 +1,9 @@
 var fs = require('fs');                                                                                                                                                                                                                  [0/33]
-var expect = require("chai").expect;
+var expect = require('chai').expect;
 
 describe('', function() {
 
-  var lib = require('./../lib/utils/nlp-utils');
+  var lib = require('./../src/utils/nlp-utils');
   var config = null;
 
   afterEach(function() {

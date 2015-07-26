@@ -8,7 +8,7 @@
     "postpublish": "rm -rf lib",
     "prestart": "npm run transpile",
     "start": "node lib/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel/register"
   },
   "main": "lib/index.js",
   "bin": "lib/index.js",
@@ -46,6 +46,8 @@
     "thepiratebay": "^0.2.2"
   },
   "devDependencies": {
-    "babel": "^5.8.5"
+    "babel": "^5.8.5",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
   }
 }
