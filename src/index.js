@@ -2,18 +2,20 @@
 
 var meow = require('meow');
 var chalk = require('chalk');
-var comment = (input) => input; // there was chalk, but not sure how it will be displayed on different terminal color schemes
+var helpLine = (command, comment) => {
+  return '  ' + command + (comment ? ' ' + comment : ''); // there was chalk, but not sure how it will be displayed on different terminal color schemes
+};
 
 var cli = meow({
   help: [
     'Usage',
-    '  pw3 --setup',
-    '  pw3 lost s01e01 720p',
-    ['  pw3 daredevil s01e01-05 720p', comment('# range queries')].join(' '),
+    helpLine('pw3 --setup'),
+    helpLine('pw3 lost s01e01 720p'),
+    helpLine('pw3 daredevil s01e01-05 720p'),
     '',
-    ['  pw3 info "sillicon valley"', comment('# description, air date of episodes')].join(' '),
-    ['  pw3 timeline', comment('# all watching shows air dates')].join(' '),
-    ['  pw3 available', comment('# all watching shows available episodes')].join(' ')
+    helpLine('pw3 info "sillicon valley"', '# description, air date of episodes'),
+    helpLine('pw3 timeline', '# show all watching shows air dates'),
+    helpLine('pw3 available', '# show all watching shows available episodes')
   ],
   pkg: '../package.json'
 });

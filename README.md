@@ -66,13 +66,10 @@ $ pw3 --help
 - Dates in torrent-trackers
 - Dates with Day of Week
 - Trakt.tv integration
-- `overview` command, list of all remembered shows with seasons beginning and end dates
-- `--help` command, also show if no input
 - Something about making want-to-watch list
 - Add tv-networks in timeline
 - Split info cli and lib packages
 - https://github.com/sindresorhus/pretty-bytes for formatting bytes
-- Edit npm scripts (https://iamstarkov.com/fav-npm-scripts/)
 - Show error message on piratebay down
 
 ## Alternatives
