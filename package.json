@@ -1,18 +1,17 @@
 {
   "name": "pw3",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "torrent trackers cli",
-  "main": "lib/index.js",
   "scripts": {
-    "compile": "babel -d lib/ src/",
-    "prepublish": "npm run compile",
-    "prestart": "npm run compile",
+    "transpile": "babel src --out-dir lib",
+    "prepublish": "npm run transpile",
+    "postpublish": "rm -rf lib",
+    "prestart": "npm run transpile",
     "start": "node lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": {
-    "pw3": "./lib/index.js"
-  },
+  "main": "lib/index.js",
+  "bin": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ewnd9/pw3.git"

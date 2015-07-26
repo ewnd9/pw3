@@ -20,18 +20,13 @@ if (isFirstRun || argv.setup === true) {
   require('./timeline-task.js').run(config);
 } else if (args[0] === 'available') {
   require('./available-task.js').run(config);
+} else if (argv['_'].length === 0 || argv['_'].join('').trim().length === 0) {
+  console.log('empty input');
+  process.exit(1);
 } else {
-  require('inquirer-bluebird').prompt({
-    type: "list",
-    name: "adapter",
-    message: "Select Adapter",
-    choices: [
-      "tpb",
-      "kickass"
-    ]
-  }).then(function(answers) {
-    require('./search-task.js').run(config, answers.adapter, argv['_'].join(' '), {
-      c: argv['c']
-    });
+  var adapter = config.data.preferences.adapter;
+
+  require('./search-task.js').run(config, adapter, argv['_'].join(' '), {
+    c: argv['c']
   });
 }
