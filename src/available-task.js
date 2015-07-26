@@ -9,7 +9,7 @@ module.exports.run = function(config) {
 
     var filterEpisode = (show, episode) => {
       var isUnwatched = episode.season > show.user.s || episode.season == show.user.s && episode.episode > show.user.ep;
-      var isAired = episode._date.isBefore(now);
+      var isAired = episode._date.isBefore(now) && episode._date.isValid();
 
       return isUnwatched && isAired;
     };
