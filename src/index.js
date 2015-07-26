@@ -12,6 +12,7 @@ var cli = meow({
     helpLine('pw3 --setup'),
     helpLine('pw3 lost s01e01 720p'),
     helpLine('pw3 daredevil s01e01-05 720p'),
+    helpLine('pw3 subtitles daredevil s01e01-05 --lang="en"', '# download subtitles to current folder'),
     '',
     helpLine('pw3 info "sillicon valley"', '# description, air date of episodes'),
     helpLine('pw3 timeline', '# show all watching shows air dates'),
@@ -31,8 +32,17 @@ if (isFirstRun || cli.flags.setup === true) {
 } else if (cli.flags.adapter) {
   require('./search-task.js').search(cli.flags.adapter);
 } else if (cli.input[0] === 'info') {
-  args.splice(0, 1);
+  cli.input.splice(0, 1);
   require('./info-task.js').search(cli.input.join(' '));
+} else if (cli.input[0] === 'subtitles') {
+  cli.input.splice(0, 1);
+
+  if (!cli.flags.lang) {
+    cli.showHelp();
+    process.exit(1);
+  }
+
+  require('./subtitles-task.js').run(cli.input.join(' '), cli.flags.lang);
 } else if (cli.input[0] === 'timeline') {
   require('./timeline-task.js').run(config);
 } else if (cli.input[0] === 'available') {

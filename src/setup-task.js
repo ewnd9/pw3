@@ -1,4 +1,4 @@
-var inquirer = require('inquirer');
+var inquirer = require('inquirer-bluebird');
 var _ = require('lodash');
 
 var pathUtils = require('./utils/path-utils');
@@ -42,7 +42,7 @@ module.exports = function(config) {
     })
   };
 
-  inquirer.prompt([q1, q2], function(answers) {
+  inquirer.prompt([q1, q2]).then(function(answers) {
     config.data.preferences.adapter = answers.adapter;
     config.data.preferences.program = answers.program;
     config.save();

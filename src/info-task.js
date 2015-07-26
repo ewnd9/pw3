@@ -3,45 +3,33 @@ var print = require('./utils/print-utils');
 
 module.exports.search = function(query) {
   var _ = require('lodash');
+  var inquirer = require('inquirer-bluebird');
 
-  imdb.search(query).then(function(data) {
-    var inquirer = require('inquirer');
+  var selectImdbTask = require('./helpers/select-imdb-task');
 
-    inquirer.prompt({
-      type: "list",
-      name: "movie",
-      message: "Select title",
-      choices: _.map(data, function(item) {
-        return {
-          name: item.title + ' (' + item.year + ')',
-          value: item
+  selectImdbTask.run(query).then((m) => {
+    if (m === 'Exit') {
+      process.exit(0);
+    } else {
+      print.kv('url', m.url);
+      print.kv('rating', m.rating);
+      print.kv('description', m.description);
+
+      inquirer.prompt({
+        type: "list",
+        name: "action",
+        message: "Select action",
+        choices: (m.isShow ? ['Seasons'] : []).concat(['Exit'])
+      }).then(function(answers) {
+        var a = answers.action;
+
+        if (a === 'Seasons') {
+          showSeasons(m);
+        } else if (a === 'Exit') {
+          process.exit(1);
         }
-      }).concat(new inquirer.Separator(), 'Exit')
-    }, function(answers) {
-      var m = answers.movie;
-
-      if (m === 'Exit') {
-        process.exit(0);
-      } else {
-        print.kv('url', m.url);
-        print.kv('rating', m.rating);
-        print.kv('description', m.description);
-
-        inquirer.prompt({
-          type: "list",
-          name: "action",
-          message: "Select action",
-          choices: (m.isShow ? ['Seasons'] : []).concat(['Exit'])
-        }, function(answers) {
-          var a = answers.action;
-          if (a === 'Seasons') {
-            showSeasons(m);
-          } else if (a === 'Exit') {
-            process.exit(1);
-          }
-        });
-      }
-    });
+      });
+    }
 
     var showSeasons = function(m) {
       imdb.searchByImdb(m.imdb).then(function(data) {
@@ -55,7 +43,7 @@ module.exports.search = function(query) {
               value: season
             };
           })
-        }, function(answers) {
+        }).then(function(answers) {
           var s = answers.season;
           print.splitByToday(s.episodes.reverse());
 
@@ -76,5 +64,7 @@ module.exports.search = function(query) {
         });
       });
     };
+
   });
+
 };

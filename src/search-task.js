@@ -83,9 +83,7 @@ module.exports.run = function(config, adapter, query, options) {
     });
   };
 
-  var tr = function(s, n) {
-    return (s.length >= n) ? s : tr('0' + s, n);
-  };
+  var tr = require('./utils/format-utils').tr;
 
   var searchRequests = null;
   var rangeQuery = nlpUtils.parseEpisodesRange(query);

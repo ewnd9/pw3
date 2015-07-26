@@ -19,6 +19,7 @@ $ pw3 --help
     pw3 --setup
     pw3 lost s01e01 720p
     pw3 daredevil s01e01-05 720p # range queries
+    pw3 subtitles daredevil s01e01-05 --lang="en" # download subtitles to current folder
 
     pw3 info "sillicon valley" # description, air date of episodes
     pw3 timeline # all watching shows air dates
@@ -61,7 +62,8 @@ $ pw3 --help
 
 ## Roadmap
 
-- Subtitles Loader
+- Download-torrent-file adapter
+- Copy-magnet-to-buffer adapter
 - Confirmation of checking tv-show progress
 - Dates in torrent-trackers
 - Dates with Day of Week

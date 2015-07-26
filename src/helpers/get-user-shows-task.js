@@ -2,13 +2,12 @@ var _ = require('lodash');
 var Promise = require('bluebird');
 var imdb = require('./../api/imdb');
 
-var inquirerPromise = require('./../utils/inquirer-promise');
-var inquirer = require('inquirer');
+var inquirer = require('inquirer-bluebird');
 
 var resolveSearches = function(config, unresolved) {
   var f = function(request) {
     return imdb.search(request.title).then(function(data) {
-      return inquirerPromise.prompt({
+      return inquirer.prompt({
         type: "list",
         name: "movie",
         message: "Select title",
