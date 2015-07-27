@@ -49,6 +49,7 @@ $ pw3 --help
 - [Feature] Relative dates in torrent-table
 - [Feature] Air dates with Day of Week
 - [Feature] Trakt.tv integration
+- [Feature] Show episode status in timeline task
 - [WIP] Something about making want-to-watch list
 - [Feature] Add tv-networks in timeline
 - [WIP] Split info cli and lib packages
@@ -57,6 +58,7 @@ $ pw3 --help
 - [Bug] Kickass give torrent link, not magnet
 - [Feature] https://github.com/bhagn/simple-shell
 - [Feature] eztv
+- [Feature] https://github.com/alexbepple/node-transmission
 
 ## Similar Projects
 

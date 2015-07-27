@@ -8,9 +8,9 @@ module.exports.run = function(config) {
 
   require('./helpers/get-shows-task').run(config).then((_episodes) => {
     var episodes = require('./helpers/flat-episodes-filter').run(_episodes);
-    
+
     var filtered = _.filter(episodes, function(episode) {
-      return episode._date.isAfter(twoWeekAgo) && episode._date.isBefore(twoWeekFromNow);
+      return episode._date.isAfter(twoWeekAgo) && episode._date.isBefore(twoWeekFromNow) && episode._date.isValid();
     });
 
     var sorted = _.sortBy(filtered, function(x) {
