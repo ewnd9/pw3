@@ -1,9 +1,8 @@
 var _ = require('lodash');
-var tpb = require('thepiratebay');
 var prompt = require('prompt');
 var Table = require('cli-table');
 var sys = require('sys');
-var Q = require('q');
+var Promise = require('bluebird');
 
 var processUtils = require('./utils/process-utils');
 var nlpUtils = require('./utils/nlp-utils');
@@ -103,7 +102,7 @@ module.exports.run = function(config, adapter, query, options) {
     }];
   }
 
-  return Q.all(searchRequests).then(function(results) {
+  return Promise.all(searchRequests).then(function(results) {
     result = _.flatten(results);
     var i = 0;
 
