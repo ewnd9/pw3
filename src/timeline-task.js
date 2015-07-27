@@ -6,7 +6,7 @@ module.exports.run = function(config) {
   var twoWeekAgo = moment(now).add(-2, 'week');
   var twoWeekFromNow = moment(now).add(+2, 'week');
 
-  require('./helpers/get-shows-task').run(config).then((_episodes) => {
+  return require('./helpers/get-shows-task').run(config).then((_episodes) => {
     var episodes = require('./helpers/flat-episodes-filter').run(_episodes);
 
     var filtered = _.filter(episodes, function(episode) {

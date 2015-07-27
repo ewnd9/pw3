@@ -15,7 +15,7 @@ module.exports.run = (config, query, lang) => {
   var rangeQuery = nlpUtils.parseEpisodesRange(query);
   var queryMatches = nlpUtils.parseQuery(query);
 
-  selectImdbTask.run(config, queryMatches.title).then((media) => {
+  return selectImdbTask.run(config, queryMatches.title).then((media) => {
     var fromEp = queryMatches.ep;
     var toEp = queryMatches.ep;
 

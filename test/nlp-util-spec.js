@@ -1,7 +1,7 @@
 var fs = require('fs');                                                                                                                                                                                                                  [0/33]
 var expect = require('chai').expect;
 
-describe('', function() {
+describe('nlpSpec', function() {
 
   var lib = require('./../src/utils/nlp-utils');
   var config = null;

@@ -5,7 +5,7 @@ module.exports.run = function(config) {
 
   var now = moment();
 
-  require('./helpers/get-shows-task').run(config).then((shows) => {
+  return require('./helpers/get-shows-task').run(config).then((shows) => {
 
     var filterEpisode = (show, episode) => {
       var isUnwatched = episode.season > show.user.s || episode.season == show.user.s && episode.episode > show.user.ep;

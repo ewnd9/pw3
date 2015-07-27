@@ -42,11 +42,13 @@ var cli = meow({
   pkg: '../package.json'
 });
 
+var result = null;
+
 if (isFirstRun || cli.flags.setup === true) {
-  require('./setup-task.js')(config);
+  result = require('./setup-task.js').run(config);
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
-  require('./info-task.js').search(config, cli.input.join(' '));
+  result = require('./info-task.js').run(config, cli.input.join(' '));
 } else if (cli.input[0] === 'subtitles') {
   cli.input.splice(0, 1);
 
@@ -55,17 +57,24 @@ if (isFirstRun || cli.flags.setup === true) {
     process.exit(1);
   }
 
-  require('./subtitles-task.js').run(config, cli.input.join(' '), cli.flags.lang);
+  result = require('./subtitles-task.js').run(config, cli.input.join(' '), cli.flags.lang);
 } else if (cli.input[0] === 'timeline') {
-  require('./timeline-task.js').run(config);
+  result = require('./timeline-task.js').run(config);
 } else if (cli.input[0] === 'available') {
-  require('./available-task.js').run(config);
+  result = require('./available-task.js').run(config);
 } else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
   cli.showHelp();
 } else {
   var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.preferences.adapter;
 
-  require('./search-task.js').run(config, adapter, cli.input.join(' '), {
+  result = require('./search-task.js').run(config, adapter, cli.input.join(' '), {
     c: cli.flags.c
+  });
+}
+
+if (result && typeof result.then === 'function') {
+  result.catch((err) => {
+    console.log('err');
+    console.log(err);
   });
 }

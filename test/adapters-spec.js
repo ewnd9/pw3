@@ -1,7 +1,7 @@
 var fs = require('fs');                                                                                                                                                                                                                  [0/33]
 var expect = require('chai').expect;
 
-describe('', function() {
+describe('adaptersSpec', function() {
 
   var query = 'hannibal s01e02 720p';
 

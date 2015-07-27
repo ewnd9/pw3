@@ -3,7 +3,7 @@ var _ = require('lodash');
 
 var pathUtils = require('./utils/path-utils');
 
-module.exports = function(config) {
+module.exports.run = function(config) {
   var now = function(value) {
     return value ? ' (now: ' + value + ')' : '';
   };
@@ -42,7 +42,7 @@ module.exports = function(config) {
     })
   };
 
-  inquirer.prompt([q1, q2]).then(function(answers) {
+  return inquirer.prompt([q1, q2]).then(function(answers) {
     config.data.preferences.adapter = answers.adapter;
     config.data.preferences.program = answers.program;
     config.save();
