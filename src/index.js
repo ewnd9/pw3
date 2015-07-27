@@ -21,6 +21,7 @@ var cli = meow({
     helpLine('# search torrents'),
     helpLine('pw3 lost s01e01 720p'),
     helpLine('pw3 daredevil s01e01-05 720p'),
+    helpLine('pw3 true detective s01e01 720p --adapter=kickass'),
     '',
     helpLine('# download subtitles to current dir'),
     helpLine('pw3 subtitles daredevil s01e01-05 --lang="en"'),
@@ -42,8 +43,6 @@ var cli = meow({
 
 if (isFirstRun || cli.flags.setup === true) {
   require('./setup-task.js')(config);
-} else if (cli.flags.adapter) {
-  require('./search-task.js').search(cli.flags.adapter);
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
   require('./info-task.js').search(config, cli.input.join(' '));
@@ -63,7 +62,7 @@ if (isFirstRun || cli.flags.setup === true) {
 } else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
   cli.showHelp();
 } else {
-  var adapter = config.data.preferences.adapter;
+  var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.preferences.adapter;
 
   require('./search-task.js').run(config, adapter, cli.input.join(' '), {
     c: cli.flags.c

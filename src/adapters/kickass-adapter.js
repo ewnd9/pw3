@@ -1,37 +1,27 @@
-var Q = require('q');
-var Kickass = require('node-kickass');
+var Promise = require('bluebird');
+var Kickass = require('node-kickass-json');
+var prettyBytes = require('pretty-bytes');
 
-var bytesToSize = function(bytes) {
-  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return 'n/a';
-  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  if (i == 0) return bytes + ' ' + sizes[i];
-  return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-};
+var _ = require('lodash');
 
-var ReleaseModel = function(release) {
-  return {
-    name: release['title'],
-    magnet: release['torrent:magneturi']['#'],
-    seeders: release['torrent:seeds']['#'],
-    leechers: release['torrent:peers']['#'],
-    size: bytesToSize(parseInt(release['torrent:contentlength']['#']))
-  }
-};
-
-module.exports = {
-  query: function(query) {
-    var deferred = Q.defer();
-    var k = new Kickass().setQuery(query)
-                         .setPage(0)
-                         .run(function(errors, data) {
-      if (errors.length > 0) {
-        deferred.reject(errors);
-      } else {
-        deferred.resolve(data.map(ReleaseModel));
-      }
-    });
-
-    return deferred.promise;
-  }
+module.exports.query = (query) => {
+  return new Promise((resolve, reject) => {
+    new Kickass().setQuery(query)
+      .run(function(error, data) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(_.map(data, (release) => {
+            return {
+              name: release['title'],
+              // magnet: release['torrent:magneturi']['#'],
+              magnet: release['torrentLink'],
+              seeders: release['seeds'],
+              leechers: release['leechs'],
+              size: prettyBytes(parseInt(release['size']))
+            }
+          }));
+        }
+      });
+  });
 };

@@ -22,6 +22,7 @@ $ pw3 --help
     # search torrents
     pw3 lost s01e01 720p
     pw3 daredevil s01e01-05 720p
+    pw3 true detective s01e01 720p --adapter=kickass
 
     # download subtitles to current dir
     pw3 subtitles daredevil s01e01-05 --lang="en"
@@ -84,9 +85,9 @@ $ pw3 --help
 - [WIP] Something about making want-to-watch list
 - [Feature] Add tv-networks in timeline
 - [WIP] Split info cli and lib packages
-- [Enhance] https://github.com/sindresorhus/pretty-bytes for formatting bytes torrent-table
 - [Bug] Show error message on piratebay down
 - [Bug] Fix closing transmission on pw3 exiting
+- [Bug] Kickass give torrent link, not magnet
 - [Feature] https://github.com/bhagn/simple-shell
 - [Feature] eztv
 
