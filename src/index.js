@@ -21,6 +21,7 @@ var cli = meow({
     helpLine('# search torrents'),
     helpLine('pw3 lost s01e01 720p'),
     helpLine('pw3 daredevil s01e01-05 720p'),
+    helpLine('# specify torrent-tracker [tpb|kickass]'),
     helpLine('pw3 true detective s01e01 720p --adapter=kickass'),
     '',
     helpLine('# download subtitles to current dir'),

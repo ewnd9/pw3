@@ -22,6 +22,7 @@ $ pw3 --help
     # search torrents
     pw3 lost s01e01 720p
     pw3 daredevil s01e01-05 720p
+    # specify torrent-tracker [tpb|kickass]
     pw3 true detective s01e01 720p --adapter=kickass
 
     # download subtitles to current dir
@@ -38,40 +39,6 @@ $ pw3 --help
 
   Notes
     You can manually edit your config in /home/ewnd9/.pw3-npm
-```
-
-### Command-line flags/options
-
-[--adapter]  torrent tracker ('tpb' - thepiratebay.se, 'kickass' - kickass.to), default is 'tpb'
-
-[--c] substring which name of torrent should contains
-
-### Default config
-
-```json
-{
-  "preferences": {
-
-  },
-  "adapters": [
-    "tpb",
-    "kickass"
-  ],
-  "available-programs": [
-    {
-      "name": "transmission-gtk",
-      "script": "transmission-gtk \"$arg\"",
-      "description": "Default ubuntu app",
-      "type": "exec"
-    },
-    {
-      "name": "peerflix",
-      "script": "peerflix \"$arg\" --vlc",
-      "description": "Torrent-streaming https://github.com/mafintosh/peerflix",
-      "type": "replace"
-    }
-  ]
-}
 ```
 
 ## Roadmap
