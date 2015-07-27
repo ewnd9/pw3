@@ -15,15 +15,28 @@ $ npm install -g pw3
 ```
 $ pw3 --help
 
-  Usage
+  Examples
+    # configure default torrent-tracker and torrent programm
     pw3 --setup
-    pw3 lost s01e01 720p
-    pw3 daredevil s01e01-05 720p # range queries
-    pw3 subtitles daredevil s01e01-05 --lang="en" # download subtitles to current folder
 
-    pw3 info "sillicon valley" # description, air date of episodes
-    pw3 timeline # all watching shows air dates
-    pw3 available # all watching shows available episodes
+    # search torrents
+    pw3 lost s01e01 720p
+    pw3 daredevil s01e01-05 720p
+
+    # download subtitles to current dir
+    pw3 subtitles daredevil s01e01-05 --lang="en"
+
+    # description, air date of episodes
+    pw3 info "sillicon valley"
+
+    # show all watching shows air dates
+    pw3 timeline
+
+    # search all unwatched episodes torrents
+    pw3 available
+
+  Notes
+    You can manually edit your config in /home/ewnd9/.pw3-npm
 ```
 
 ### Command-line flags/options
@@ -62,19 +75,25 @@ $ pw3 --help
 
 ## Roadmap
 
-- Download-torrent-file adapter
-- Copy-magnet-to-buffer adapter
-- Confirmation of checking tv-show progress
-- Dates in torrent-trackers
-- Dates with Day of Week
-- Trakt.tv integration
-- Something about making want-to-watch list
-- Add tv-networks in timeline
-- Split info cli and lib packages
-- https://github.com/sindresorhus/pretty-bytes for formatting bytes
-- Show error message on piratebay down
+- [Feature] Download-torrent-file  
+- [Feature] Copy-magnet-to-buffer
+- [Feature] Tv-show progress confirmation
+- [Feature] Relative dates in torrent-table
+- [Feature] Air dates with Day of Week
+- [Feature] Trakt.tv integration
+- [WIP] Something about making want-to-watch list
+- [Feature] Add tv-networks in timeline
+- [WIP] Split info cli and lib packages
+- [Enhance] https://github.com/sindresorhus/pretty-bytes for formatting bytes torrent-table
+- [Bug] Show error message on piratebay down
+- [Bug] Fix closing transmission on pw3 exiting
+- [Feature] https://github.com/bhagn/simple-shell
+- [Feature] eztv
 
-## Alternatives
+## Similar Projects
 
-- [lumus](https://github.com/ziacik/lumus)
-- [termflix](https://github.com/asarode/termflix)
+- https://github.com/ziacik/lumus auto-loader to transmission, local webservice
+- https://github.com/asarode/termflix peerflix wrapper
+- https://github.com/arshad/airtv air dates cli
+- https://github.com/arshad/subdb-cli subtitles downloader cli
+- https://github.com/arshad/kaizoku tpb cli

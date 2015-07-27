@@ -8,7 +8,10 @@
     "postpublish": "rm -rf lib",
     "prestart": "npm run transpile",
     "start": "node lib/index.js",
-    "test": "mocha --require babel/register"
+    "test": "mocha --require babel/register",
+    "coverage": "istanbul cover _mocha src/index.js -- --require babel/register",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "main": "lib/index.js",
   "bin": "lib/index.js",
@@ -49,6 +52,8 @@
   "devDependencies": {
     "babel": "^5.8.5",
     "chai": "^3.2.0",
+    "coveralls": "^2.11.3",
+    "istanbul": "^0.3.17",
     "mocha": "^2.2.5"
   }
 }

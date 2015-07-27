@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+var isFirstRun = false; // dot-file-config logic error :(
+
+var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config.json', function() {
+  isFirstRun = true;
+});
+
 var meow = require('meow');
 var chalk = require('chalk');
 var helpLine = (command, comment) => {
@@ -8,23 +14,30 @@ var helpLine = (command, comment) => {
 
 var cli = meow({
   help: [
-    'Usage',
+    'Examples',
+    helpLine('# configure default torrent-tracker and torrent programm'),
     helpLine('pw3 --setup'),
+    '',
+    helpLine('# search torrents'),
     helpLine('pw3 lost s01e01 720p'),
     helpLine('pw3 daredevil s01e01-05 720p'),
-    helpLine('pw3 subtitles daredevil s01e01-05 --lang="en"', '# download subtitles to current folder'),
     '',
-    helpLine('pw3 info "sillicon valley"', '# description, air date of episodes'),
-    helpLine('pw3 timeline', '# show all watching shows air dates'),
-    helpLine('pw3 available', '# show all watching shows available episodes')
+    helpLine('# download subtitles to current dir'),
+    helpLine('pw3 subtitles daredevil s01e01-05 --lang="en"'),
+    '',
+    helpLine('# description, air date of episodes'),
+    helpLine('pw3 info "sillicon valley"'),
+    '',
+    helpLine('# show all watching shows air dates'),
+    helpLine('pw3 timeline'),
+    '',
+    helpLine('# search all unwatched episodes torrents'),
+    helpLine('pw3 available'),
+    '',
+    'Notes',
+    helpLine('You can manually edit your config in ' + config.path)
   ],
   pkg: '../package.json'
-});
-
-var isFirstRun = false; // dot-file-config logic error :(
-
-var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config.json', function() {
-  isFirstRun = true;
 });
 
 if (isFirstRun || cli.flags.setup === true) {
