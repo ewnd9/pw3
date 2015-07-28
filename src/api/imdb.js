@@ -7,9 +7,12 @@ var tr = function(n) {
 };
 
 var prettyFormat = module.exports.prettyFormat = function(item) {
+  var title = item.title;
+  var imdb = item.idIMDB;
+
   return {
-    imdb: item.idIMDB,
-    title: item.title,
+    imdb: imdb,
+    title: title,
     url: item.urlIMDB,
     year: item.year,
     description: item.plot,
@@ -33,7 +36,9 @@ var prettyFormat = module.exports.prettyFormat = function(item) {
           numericTitle: numericTitle,
           fullTitle: numericTitle + ' ' + episode.title,
           date: date,
-          _date: moment(date, 'D MMM YYYY', true)
+          _date: moment(date, 'D MMM YYYY', true),
+          showTitle: title,
+          showImdb: imdb
         };
       });
 

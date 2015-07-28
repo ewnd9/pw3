@@ -9,6 +9,8 @@ module.exports.run = (config) => {
   var watchedStorage = require('./helpers/watched-storage')(config);
   var historyStorage = require('./helpers/history-storage');
 
+  var printUtils = require('./utils/print-utils');
+
   var flattenEpisodes = (show) => {
     var seasons = _.map(show.seasons, (season) => season.episodes);
     return _.flatten(seasons);
@@ -62,7 +64,7 @@ module.exports.run = (config) => {
           message: 'Select watched episodes',
           choices: _.map(episodes, (episode) => {
             return {
-              name: episode.fullTitle,
+              name: printUtils.episodeFormat(episode),
               value: episode,
               checked: watchedStorage.isEpisodeChecked(media, episode)
             };

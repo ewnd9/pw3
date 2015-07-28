@@ -12,9 +12,12 @@ module.exports.run = function(config, query) {
     if (m === 'Exit') {
       process.exit(0);
     } else {
+      print.info('');
+      print.kv('title', m.title);
       print.kv('url', m.url);
       print.kv('rating', m.rating);
       print.kv('description', m.description);
+      print.info('');
 
       inquirer.prompt({
         type: "list",

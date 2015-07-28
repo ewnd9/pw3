@@ -1,10 +1,11 @@
 var chalk = require('chalk');
+var _ = require('lodash');
 
 var argsJoin = function(args) {
   return Array.prototype.slice.call(args).map(function(x) { return typeof x === 'object' ? JSON.stringify(x) : x; }).join(' ');
 }
 
-module.exports.info = function() {
+var info = module.exports.info = function() {
   console.log(chalk.green(argsJoin(arguments)));
 };
 
@@ -16,17 +17,26 @@ module.exports.kv = function(key, value) {
   console.log(module.exports.kvFormat(key, value));
 };
 
+var episodeFormat = module.exports.episodeFormat = (episode, options = { omitShowTitle: false }) => {
+  var data = [episode._date.format('DD.MM.YYYY'), (!options.omitShowTitle && episode.showTitle) || '', episode.numericTitle];
+  var filtered = _.filter(data, s => s.length > 0);
+
+  return module.exports.kvFormat(filtered.join(' '), episode.title);
+};
+
+module.exports.mediaFormat = (media) => {
+  return `${media.title} (${media.year})`;
+};
+
 module.exports.splitByToday = function(episodes, title) {
   var moment = require('moment');
-  var _ = require('lodash');
-
   var today = moment();
 
   var prevDate = null;
   var used = false;
 
   var printToday = function() {
-    module.exports.info('==== today (' + (today.format('DD.MM.YYYY')) + ') ====');
+    info('==== today (' + (today.format('DD.MM.YYYY')) + ') ====');
   };
 
   _.each(episodes, function(episode) {
@@ -41,7 +51,7 @@ module.exports.splitByToday = function(episodes, title) {
       printToday();
     }
 
-    module.exports.kv([episode._date.format('DD.MM.YYYY'), episode.showTitle || '', episode.numericTitle].join(' '), episode.title);
+    console.log(episodeFormat(episode));
     prevDate = date;
   });
 

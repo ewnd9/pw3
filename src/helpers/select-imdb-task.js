@@ -11,20 +11,10 @@ module.exports.run = (config, query) => {
 
   var imdbSearch = () => {
     return imdb.search(query).then((data) => {
-      return inquirer.prompt({
-        type: 'list',
-        name: 'media',
-        message: 'Select title',
-        choices: _.map(data, (item) => {
-          return {
-            name: item.title + ' (' + item.year + ')',
-            value: item
-          }
-        }).concat(new inquirer.Separator(), 'Exit')
-      });
-    }).then((answers) => {
-      historyStorage.setImdb(config, query, answers.media.imdb);
-      return answers.media;
+      return require('./../prompts/select-media')(data);
+    }).then((media) => {
+      historyStorage.setImdb(config, query, media.imdb);
+      return media;
     });
   }
 
