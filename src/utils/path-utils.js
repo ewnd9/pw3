@@ -5,11 +5,15 @@ module.exports.isInPath = function(cmd) {
   var result = false;
 
   process.env.PATH.split(delimiter).some(function (path) {
-    fs.readdirSync(path).forEach(function(file) {
-      if (file === cmd) {
-        result = true;
-      }
-    });
+    try {
+      fs.readdirSync(path).forEach(function(file) {
+        if (file === cmd) {
+          result = true;
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   return result;
