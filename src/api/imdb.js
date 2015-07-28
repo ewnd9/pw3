@@ -22,17 +22,18 @@ var parse = function(item) {
         var numericSeason = tr(s);
         var numericEpisode = tr(episode.episode);
         var numericTitle = numericSeason + 'x' + numericEpisode;
+        var date = episode.date.replace('.', '');
 
         return {
           title: episode.title,
           episode: episode.episode,
-          date: episode.date,
           season: s,
           numericSeason: numericSeason,
           numericEpisode: numericEpisode,
           numericTitle: numericTitle,
           fullTitle: numericTitle + ' ' + episode.title,
-          _date: moment(episode.date.replace('.', ''), 'D MMM YYYY', true)
+          date: date,
+          _date: moment(date, 'D MMM YYYY', true)
         };
       });
 

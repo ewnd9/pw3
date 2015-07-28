@@ -26,6 +26,11 @@ module.exports = (config) => {
     });
   };
 
+  result.findLatestEpisode = (media) => {
+    var showEntry = result.findProgressEntry(media);
+    return _.last(_.sortByAll(showEntry.episodes, ['season', 'episode']));
+  };
+
   result.isEpisodeChecked = (show, episode) => {
     var progressEntry = data[show.imdb];
     if (!progressEntry) {
@@ -56,8 +61,8 @@ module.exports = (config) => {
     if (watched === episodes.length) {
       return 'watched: all';
     } else {
-      var s1 = '';
-      // var s1 = watched > 0 ? `watched: ${watched} episodes` : '';
+      // var s1 = '';
+      var s1 = watched > 0 ? `watched: ${watched} episodes` : '';
       var s2 = unwatched > 0 ? `unwatched: ${unwatched} episodes` : '';
       var s3 = unaired > 0 ? `unaired: ${unaired} episodes` : '';
 

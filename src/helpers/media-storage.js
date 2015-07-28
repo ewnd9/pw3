@@ -4,6 +4,8 @@ var moment = require('moment');
 
 var imdbApi = require('./../api/imdb');
 
+var _ = require('lodash');
+
 module.exports.getByImdb = (imdb) => {
   config.data.imdb = config.data.imdb || {};
 
@@ -12,7 +14,17 @@ module.exports.getByImdb = (imdb) => {
     var twoDaysAgo = moment().add(-2, 'days');
 
     if (moment(date, 'DD-MM-YYYY').isAfter(twoDaysAgo)) {
-      return Promise.resolve(config.data.imdb[imdb].media);
+      var media = config.data.imdb[imdb].media;
+      media.seasons = _.map(media.seasons, (season) => {
+        season.episodes = _.map(season.episodes, (episode) => {
+          episode._date = moment(episode.date, 'D MMM YYYY', true);
+          return episode;
+        });
+
+        return season;
+      });
+
+      return Promise.resolve(media);
     }
   }
 
@@ -22,6 +34,15 @@ module.exports.getByImdb = (imdb) => {
       date: moment().format('DD-MM-YYYY')
     };
     config.save();
+
+    media.seasons = _.map(media.seasons, (season) => {
+      season.episodes = _.map(season.episodes, (episode) => {
+        episode._date = moment(episode.date, 'D MMM YYYY', true);
+        return episode;
+      });
+
+      return season;
+    });
 
     return media;
   });

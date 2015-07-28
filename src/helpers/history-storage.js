@@ -1,11 +1,24 @@
 var _ = require('lodash');
+var mediaStorage = require('./media-storage');
+
+module.exports.getHistory = (config, title) => {
+  var searches = config.data.searches = config.data.searches || [];
+  var result = _.find(searches, (item) => item.title === title);
+
+  if (!result) {
+    result = {
+      title: title,
+      s: 0,
+      ep: 0
+    };
+    searches.push(result);
+  }
+
+  return result;
+};
 
 module.exports.process = (config, queryMatches) => {
-  config.data.searches = config.data.searches || [];
-
-  var last = _.find(config.data.searches, function(item) {
-    return item.title === queryMatches.title;
-  });
+  var last = module.exports.getHistory(config, queryMatches.title);
 
   if (last) {
     if (queryMatches.s > last.s) {
@@ -21,24 +34,14 @@ module.exports.process = (config, queryMatches) => {
   config.save();
 };
 
-module.exports.getImdb = (config, title) => {
-  var searches = config.data.searchesImdb = config.data.searchesImdb || [];
-  var last = _.find(searches, item => item.title === title);
-
-  return last;
+module.exports.getHistoryByImdb = (config, imdb) => {
+  var searches = config.data.searches = config.data.searches || [];
+  return _.find(searches, (item) => item.imdb === imdb);
 };
 
-module.exports.setImdb = (config, title, media) => {
-  var last = module.exports.getImdb(config, title);
-
-  if (last) {
-    last.media = media;
-  } else {
-    searches.push({
-      title: title,
-      media: media
-    });
-  }
+module.exports.setImdb = (config, title, imdb) => {
+  var last = module.exports.getHistory(config, title);
+  last.imdb = imdb;
 
   config.save();
 };

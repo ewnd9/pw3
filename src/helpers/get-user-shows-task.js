@@ -6,23 +6,11 @@ var inquirer = require('inquirer-bluebird');
 
 var resolveSearches = function(config, unresolved) {
   var f = function(request) {
-    return imdb.search(request.title).then(function(data) {
-      return inquirer.prompt({
-        type: "list",
-        name: "movie",
-        message: "Select title",
-        choices: _.map(data, function(item) {
-          return {
-            name: item.title + ' (' + item.year + ')',
-            value: item
-          }
-        }).concat(new inquirer.Separator(), 'Exit')
-      }).then(function(answers) {
-        request.imdb = answers.movie.imdb;
-        config.save();
+    return require('./resolve-title-task').run(request.title).then((movie) => {
+      request.imdb = movie.imdb;
+      config.save();
 
-        return true;
-      });
+      return true;
     });
   };
 

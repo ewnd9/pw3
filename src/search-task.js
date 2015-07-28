@@ -33,8 +33,11 @@ module.exports.run = function(config, adapter, query, options) {
     var r = result[index - 1];
 
     if (r) {
-      var program = _.find(config.data['available-programs'], function(program) {
-        return program.name === config.data['preferences']['program'];
+      var pjson = require('./../package.json');
+      var programs = pjson['app-data']['programs'];
+
+      var program = _.find(programs, function(program) {
+        return program.name === config.data.program;
       });
 
       print.info(program);

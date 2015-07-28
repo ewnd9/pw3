@@ -5,7 +5,9 @@ module.exports.run = (config, query) => {
   var imdb = require('./../api/imdb');
 
   var historyStorage = require('./history-storage');
-  var history = historyStorage.getImdb(config, query);
+  var mediaStorage = require('./media-storage');
+
+  var history = historyStorage.getHistory(config, query);
 
   var imdbSearch = () => {
     return imdb.search(query).then((data) => {
@@ -21,20 +23,22 @@ module.exports.run = (config, query) => {
         }).concat(new inquirer.Separator(), 'Exit')
       });
     }).then((answers) => {
-      historyStorage.setImdb(config, query, answers.media);
+      historyStorage.setImdb(config, query, answers.media.imdb);
       return answers.media;
     });
   }
 
-  if (history) {
-    return inquirer.prompt({
-      type: 'list',
-      name: 'media',
-      message: 'Select title',
-      choices: [{
-        name: history.media.title + ' (' + history.media.year + ')',
-        value: history.media
-      }].concat(new inquirer.Separator(), 'More')
+  if (history.imdb) {
+    return mediaStorage.getByImdb(history.imdb).then((media) => {
+      return inquirer.prompt({
+        type: 'list',
+        name: 'media',
+        message: 'Select title',
+        choices: [{
+          name: media.title + ' (' + media.year + ')',
+          value: media
+        }].concat(new inquirer.Separator(), 'More')
+      });
     }).then((answers) => {
       if (answers.media === 'More') {
         return imdbSearch();
