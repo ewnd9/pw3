@@ -14,36 +14,18 @@ module.exports.getByImdb = (imdb) => {
     var twoDaysAgo = moment().add(-2, 'days');
 
     if (moment(date, 'DD-MM-YYYY').isAfter(twoDaysAgo)) {
-      var media = config.data.imdb[imdb].media;
-      media.seasons = _.map(media.seasons, (season) => {
-        season.episodes = _.map(season.episodes, (episode) => {
-          episode._date = moment(episode.date, 'D MMM YYYY', true);
-          return episode;
-        });
-
-        return season;
-      });
-
+      var media = imdbApi.prettyFormat(config.data.imdb[imdb].media);
       return Promise.resolve(media);
     }
   }
 
-  return imdbApi.searchByImdb(imdb).then((media) => {
+  return imdbApi.searchByImdbRaw(imdb).then((media) => {
     config.data.imdb[imdb] = {
       media: media,
       date: moment().format('DD-MM-YYYY')
     };
     config.save();
 
-    media.seasons = _.map(media.seasons, (season) => {
-      season.episodes = _.map(season.episodes, (episode) => {
-        episode._date = moment(episode.date, 'D MMM YYYY', true);
-        return episode;
-      });
-
-      return season;
-    });
-
-    return media;
+    return imdbApi.prettyFormat(media);
   });
 };

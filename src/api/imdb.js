@@ -6,7 +6,7 @@ var tr = function(n) {
   return n < 10 ? '0' + n : '' + n;
 };
 
-var parse = function(item) {
+var prettyFormat = module.exports.prettyFormat = function(item) {
   return {
     imdb: item.idIMDB,
     title: item.title,
@@ -47,21 +47,26 @@ var parse = function(item) {
   }
 };
 
-module.exports.search = function(query) {
+var searchRaw = module.exports.searchRaw = function(query) {
   var params = {
     title: query,
     limit: 10,
   };
 
   return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function(body) {
-    var data = JSON.parse(body);
-    return _.map(data, function(item) {
-      return parse(item);
-    });
+    return JSON.parse(body);
   });
 };
 
-module.exports.searchByImdb = function(imdb) {
+module.exports.search = function(query) {
+  return searchRaw(query).then((data) => {
+    return _.map(data, function(item) {
+      return prettyFormat(item);
+    });
+  })
+};
+
+var searchByImdbRaw = module.exports.searchByImdbRaw = function(imdb) {
   var params = {
     idIMDB: imdb,
     limit: 1,
@@ -69,7 +74,12 @@ module.exports.searchByImdb = function(imdb) {
   };
 
   return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function(body) {
-    var data = JSON.parse(body);
-    return parse(data);
+    return JSON.parse(body);
+  });
+};
+
+module.exports.searchByImdb = function(imdb) {
+  return searchByImdbRaw(imdb).then(function(data) {
+    return prettyFormat(data);
   });
 };
