@@ -52,7 +52,7 @@ var cli = meow({
 var result = null;
 
 if (isFirstRun || cli.flags.setup === true) {
-  result = require('./setup-task.js').run(config);
+  result = require('./setup-task.js').run();
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
   var query = cli.input.join(' ').trim();
@@ -62,7 +62,7 @@ if (isFirstRun || cli.flags.setup === true) {
     process.exit(1);
   }
 
-  result = require('./info-task.js').run(config, query);
+  result = require('./info-task.js').run(query);
 } else if (cli.input[0] === 'subtitles') {
   cli.input.splice(0, 1);
 
@@ -71,20 +71,20 @@ if (isFirstRun || cli.flags.setup === true) {
     process.exit(1);
   }
 
-  result = require('./subtitles-task.js').run(config, cli.input.join(' '), cli.flags.lang);
+  result = require('./subtitles-task.js').run(cli.input.join(' '), cli.flags.lang);
 } else if (cli.input[0] === 'timeline') {
   cli.input.splice(0, 1);
-  result = require('./timeline-task.js').run(config, cli.input);
+  result = require('./timeline-task.js').run(cli.input);
 } else if (cli.input[0] === 'available') {
-  result = require('./available-task.js').run(config);
+  result = require('./available-task.js').run();
 } else if (cli.input[0] === 'progress') {
-  result = require('./progress-task.js').run(config);
+  result = require('./progress-task.js').run();
 } else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
   cli.showHelp();
 } else {
   var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.adapter;
 
-  result = require('./search-task.js').run(config, adapter, cli.input.join(' '), {
+  result = require('./search-task.js').run(adapter, cli.input.join(' '), {
     c: cli.flags.c
   });
 }

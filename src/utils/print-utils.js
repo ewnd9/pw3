@@ -17,11 +17,11 @@ module.exports.kv = function(key, value) {
   console.log(module.exports.kvFormat(key, value));
 };
 
-var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false, config: null }) => {
+var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false }) => {
   var data = [episode._date.format('DD.MM.YYYY'), (episode.showTitle) || '', episode.numericTitle];
 
-  if (options.userCheck && options.config) {
-    var watchedStorage = require('./../helpers/watched-storage')(options.config);
+  if (options.userCheck) {
+    var watchedStorage = require('./../helpers/watched-storage');
     data = [watchedStorage.isEpisodeChecked(episode) ? '[x]' : '[ ]'].concat(data);
   }
 

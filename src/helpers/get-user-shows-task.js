@@ -4,7 +4,9 @@ var imdb = require('./../api/imdb');
 
 var inquirer = require('inquirer-bluebird');
 
-var resolveSearches = function(config, unresolved) {
+var config = require('dot-file-config')('.pw3-npm');
+
+var resolveSearches = function(unresolved) {
   var f = function(request) {
     return require('./resolve-title-task').run(request.title).then((movie) => {
       request.imdb = movie.imdb;
@@ -21,14 +23,14 @@ var resolveSearches = function(config, unresolved) {
   });
 };
 
-module.exports.run = function(config) {
+module.exports.run = function() {
   var searches = config.data.searches = config.data.searches || [];
 
   var unresolved = _.filter(searches, function(search) {
     return !search.imdb;
   });
 
-  return resolveSearches(config, unresolved).then(function(data) {
+  return resolveSearches(unresolved).then(function(data) {
     return searches;
   });
 };

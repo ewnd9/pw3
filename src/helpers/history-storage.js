@@ -1,7 +1,9 @@
 var _ = require('lodash');
 var mediaStorage = require('./media-storage');
 
-module.exports.getHistory = (config, title) => {
+var config = require('dot-file-config')('.pw3-npm');
+
+module.exports.getHistory = (title) => {
   var searches = config.data.searches = config.data.searches || [];
   var result = _.find(searches, (item) => item.title === title);
 
@@ -17,8 +19,8 @@ module.exports.getHistory = (config, title) => {
   return result;
 };
 
-module.exports.process = (config, queryMatches) => {
-  var last = module.exports.getHistory(config, queryMatches.title);
+module.exports.process = (queryMatches) => {
+  var last = module.exports.getHistory(queryMatches.title);
 
   if (last) {
     if (queryMatches.s > last.s) {
@@ -34,13 +36,13 @@ module.exports.process = (config, queryMatches) => {
   config.save();
 };
 
-module.exports.getHistoryByImdb = (config, imdb) => {
+module.exports.getHistoryByImdb = (imdb) => {
   var searches = config.data.searches = config.data.searches || [];
   return _.find(searches, (item) => item.imdb === imdb);
 };
 
-module.exports.setImdb = (config, title, imdb) => {
-  var last = module.exports.getHistory(config, title);
+module.exports.setImdb = (title, imdb) => {
+  var last = module.exports.getHistory(title);
   last.imdb = imdb;
 
   config.save();

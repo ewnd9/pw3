@@ -2,8 +2,9 @@ var inquirer = require('inquirer-bluebird');
 var _ = require('lodash');
 
 var pathUtils = require('./utils/path-utils');
+var config = require('dot-file-config')('.pw3-npm');
 
-module.exports.run = function(config) {
+module.exports.run = function() {
   var now = function(value) {
     return value ? ' (now: ' + value + ')' : '';
   };

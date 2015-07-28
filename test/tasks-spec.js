@@ -18,39 +18,39 @@ describe('tasksSpec', function() {
 
   it('availableTask', function() {
     var lib = require('./../src/available-task');
-    test(lib.run(config));
+    test(lib.run());
   });
 
   it('infoTask', function() {
     var lib = require('./../src/info-task');
-    test(lib.run(config, query));
+    test(lib.run(query));
   });
 
   it('progressTask', function() {
     var lib = require('./../src/progress-task');
-    test(lib.run(config));
+    test(lib.run());
   });
 
   it('searchTask', function() {
     var lib = require('./../src/search-task');
-    test(lib.run(config, 'tpb', query));
+    test(lib.run('tpb', query));
   });
 
   it('setupTask', function() {
     var lib = require('./../src/setup-task');
-    test(lib.run(config));
+    test(lib.run());
   });
 
   it('subtitlesTask', function() {
     this.timeout(5000);
 
     var lib = require('./../src/subtitles-task');
-    test(lib.run(config, query, 'en'));
+    test(lib.run(query, 'en'));
   });
 
   it('timelineTask', function() {
     var lib = require('./../src/timeline-task');
-    test(lib.run(config));
+    test(lib.run());
   });
 
 })

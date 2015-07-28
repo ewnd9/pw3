@@ -1,14 +1,14 @@
 var imdb = require('./api/imdb');
 var print = require('./utils/print-utils');
 
-module.exports.run = function(config, query) {
+module.exports.run = function(query) {
   var _ = require('lodash');
   var inquirer = require('inquirer-bluebird');
 
   var selectImdbTask = require('./helpers/select-imdb-task');
   var mediaStorage = require('./helpers/media-storage');
 
-  return selectImdbTask.run(config, query).then((m) => {
+  return selectImdbTask.run(query).then((m) => {
     if (m === 'Exit') {
       process.exit(0);
     } else {
@@ -50,8 +50,7 @@ module.exports.run = function(config, query) {
         }).then(function(answers) {
           var s = answers.season;
           print.splitByToday(s.episodes.reverse(), {
-            userCheck: true,
-            config: config
+            userCheck: true
           });
 
           // @TODO: pull request to inquirer to disable pagination

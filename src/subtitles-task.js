@@ -1,4 +1,4 @@
-module.exports.run = (config, query, lang) => {
+module.exports.run = (query, lang) => {
   var Promise = require('bluebird');
   var opensrt = require('opensrt_js');
   var OpenSRT = Promise.promisifyAll(new opensrt('OSTestUserAgent')); // @TODO: new user agent
@@ -15,7 +15,7 @@ module.exports.run = (config, query, lang) => {
   var rangeQuery = nlpUtils.parseEpisodesRange(query);
   var queryMatches = nlpUtils.parseQuery(query);
 
-  return selectImdbTask.run(config, queryMatches.title).then((media) => {
+  return selectImdbTask.run(queryMatches.title).then((media) => {
     var fromEp = queryMatches.ep;
     var toEp = queryMatches.ep;
 

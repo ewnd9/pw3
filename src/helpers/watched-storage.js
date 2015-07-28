@@ -1,4 +1,6 @@
-module.exports = (config) => {
+var config = require('dot-file-config')('.pw3-npm');
+
+module.exports = (function() {
   var _ = require('lodash');
   var moment = require('moment');
 
@@ -103,4 +105,4 @@ module.exports = (config) => {
   };
 
   return result;
-};
+})();

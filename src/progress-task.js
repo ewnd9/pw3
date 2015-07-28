@@ -4,9 +4,11 @@ var moment = require('moment');
 
 var _ = require('lodash');
 
-module.exports.run = (config) => {
+var config = require('dot-file-config')('.pw3-npm');
 
-  var watchedStorage = require('./helpers/watched-storage')(config);
+module.exports.run = () => {
+
+  var watchedStorage = require('./helpers/watched-storage');
   var historyStorage = require('./helpers/history-storage');
 
   var printUtils = require('./utils/print-utils');
@@ -96,7 +98,7 @@ module.exports.run = (config) => {
   };
 
   var checkShow = (media) => {
-    var history = historyStorage.getHistoryByImdb(config, media.imdb);
+    var history = historyStorage.getHistoryByImdb(media.imdb);
     var lastWatchedEpisode = watchedStorage.findLatestEpisode(media);
 
     if (!history || history.s === 0 || history.ep === 0) {
@@ -128,7 +130,7 @@ module.exports.run = (config) => {
   };
 
   var loop = () => {
-    return require('./helpers/get-shows-task').run(config).then((shows) => {
+    return require('./helpers/get-shows-task').run().then((shows) => {
       return inquirer.prompt({
         type: 'list',
         name: 'media',
@@ -155,7 +157,7 @@ module.exports.run = (config) => {
           var userInput = answers.title;
 
           return require('./helpers/resolve-title-task').run(userInput).then((media) => {
-            historyStorage.setImdb(config, userInput, media.imdb);
+            historyStorage.setImdb(userInput, media.imdb);
             return loop();
           });
         });

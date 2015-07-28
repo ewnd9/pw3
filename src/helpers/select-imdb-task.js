@@ -1,4 +1,4 @@
-module.exports.run = (config, query) => {
+module.exports.run = (query) => {
   var inquirer = require('inquirer-bluebird');
   var _ = require('lodash');
 
@@ -7,13 +7,13 @@ module.exports.run = (config, query) => {
   var historyStorage = require('./history-storage');
   var mediaStorage = require('./media-storage');
 
-  var history = historyStorage.getHistory(config, query);
+  var history = historyStorage.getHistory(query);
 
   var imdbSearch = () => {
     return imdb.search(query).then((data) => {
       return require('./../prompts/select-media')(data);
     }).then((media) => {
-      historyStorage.setImdb(config, query, media.imdb);
+      historyStorage.setImdb(query, media.imdb);
       return media;
     });
   }

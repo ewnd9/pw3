@@ -8,7 +8,9 @@ var processUtils = require('./utils/process-utils');
 var nlpUtils = require('./utils/nlp-utils');
 var print = require('./utils/print-utils');
 
-module.exports.run = function(config, adapter, query, options) {
+var config = require('dot-file-config')('.pw3-npm');
+
+module.exports.run = function(adapter, query, options) {
   adapter = adapter || 'tpb';
   options = options || {};
 
@@ -48,7 +50,7 @@ module.exports.run = function(config, adapter, query, options) {
       processUtils[program.type](script);
 
       if (r.description.queryMatches) {
-        require('./helpers/history-storage').process(config, r.description.queryMatches);
+        require('./helpers/history-storage').process(r.description.queryMatches);
       }
     } else {
       print.info('wrong input');

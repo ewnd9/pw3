@@ -1,11 +1,13 @@
-module.exports.run = function(config) {
+var config = require('dot-file-config')('.pw3-npm');
+
+module.exports.run = function() {
 
   var moment = require('moment');
   var _ = require('lodash');
 
   var now = moment();
 
-  return require('./helpers/get-shows-task').run(config).then((shows) => {
+  return require('./helpers/get-shows-task').run().then((shows) => {
 
     var filterEpisode = (show, episode) => {
       var isUnwatched = episode.season > show.user.s || episode.season == show.user.s && episode.episode > show.user.ep;
@@ -73,7 +75,7 @@ module.exports.run = function(config) {
       var query = answers.query + ' ' + answers.postfix;
       print.info('Searching "' + query + '"');
 
-      return require('./search-task').run(config, 'tpb', query);
+      return require('./search-task').run(config.data.adapter, query);
     });
   });
 
