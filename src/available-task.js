@@ -6,14 +6,19 @@ module.exports.run = function() {
   var _ = require('lodash');
 
   var now = moment();
+  var watchedStorage = require('./helpers/watched-storage');
 
   return require('./helpers/get-shows-task').run().then((shows) => {
 
     var filterEpisode = (show, episode) => {
-      var isUnwatched = episode.season > show.user.s || episode.season == show.user.s && episode.episode > show.user.ep;
+      var lastWatchedEpisode = watchedStorage.findLatestEpisode(show);
+
+      var isSearchUnwatched = episode.season > show.user.s || episode.season == show.user.s && episode.episode > show.user.ep;
+      var isProgressUnwatched = !lastWatchedEpisode || (episode.season > lastWatchedEpisode.season || episode.season == lastWatchedEpisode.season && episode.episode > lastWatchedEpisode.episode);
+
       var isAired = episode._date.isBefore(now) && episode._date.isValid();
 
-      return isUnwatched && isAired;
+      return isSearchUnwatched && isProgressUnwatched && isAired;
     };
 
     var result = _.map(shows, function(show) {
