@@ -15,6 +15,7 @@ var helpLine = (command, comment) => {
 var cli = meow({
   help: [
     'Examples',
+    '',
     helpLine('# configure default torrent-tracker and torrent programm'),
     helpLine('pw3 --setup'),
     '',

@@ -66,7 +66,8 @@ module.exports.run = function(config, adapter, query, options) {
 
   var adapters = {
     tpb: require('./adapters/tpb-adapter'),
-    kickass: require('./adapters/kickass-adapter')
+    kickass: require('./adapters/kickass-adapter'),
+    eztv: require('./adapters/eztv-adapter')
   }
 
   var search = function(query, description) {

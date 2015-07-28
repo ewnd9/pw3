@@ -6,8 +6,8 @@ describe('adaptersSpec', function() {
   var query = 'hannibal s01e02 720p';
 
   var test = (lib, done) => {
-    var result = lib.query(query).then((data) => {
-      expect(data.length).to.be.above(4);
+    lib.query(query).then((data) => {
+      expect(data.length).to.be.above(0);
 
       expect(data[0]).to.have.property('name');
       expect(data[0]).to.have.property('magnet');
@@ -33,6 +33,13 @@ describe('adaptersSpec', function() {
     this.timeout(10000);
 
     var lib = require('./../src/adapters/kickass-adapter');
+    test(lib, done);
+  });
+
+  it('eztv', function(done) {
+    this.timeout(20000);
+
+    var lib = require('./../src/adapters/eztv-adapter');
     test(lib, done);
   });
 

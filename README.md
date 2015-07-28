@@ -4,7 +4,7 @@
 
 > powerstreaming - watching several episodes of a TV show in a row, usually from an online streaming service. This can be done over several evenings, or a marathon weekend.
 
-Air dates, search on tpb and kickass, check watched episodes from cli
+Air dates, search on tpb, eztv or kickass, check watched episodes from cli
 
 ## Installation
 
@@ -18,6 +18,7 @@ $ npm install -g pw3
 $ pw3 --help
 
   Examples
+
     # configure default torrent-tracker and torrent programm
     pw3 --setup
 
@@ -26,7 +27,7 @@ $ pw3 --help
 
     # range query
     pw3 daredevil s01e01-05 720p
-    
+
     # specify torrent-tracker [tpb|kickass]
     pw3 true detective s01e01 720p --adapter=kickass
 
@@ -75,3 +76,4 @@ $ pw3 --help
 - https://github.com/arshad/airtv air dates cli
 - https://github.com/arshad/subdb-cli subtitles downloader cli
 - https://github.com/arshad/kaizoku tpb cli
+- https://github.com/Munter/ezflix stream eztv to peerflix

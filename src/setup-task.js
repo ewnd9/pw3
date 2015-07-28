@@ -8,7 +8,7 @@ module.exports.run = function(config) {
     return value ? ' (now: ' + value + ')' : '';
   };
 
-  var adapters = config.data.adapters;
+  var adapters = ['tpb', 'kickass', 'eztv'];
 
   var q1 = {
     type: "list",
