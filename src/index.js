@@ -73,7 +73,8 @@ if (isFirstRun || cli.flags.setup === true) {
 
   result = require('./subtitles-task.js').run(config, cli.input.join(' '), cli.flags.lang);
 } else if (cli.input[0] === 'timeline') {
-  result = require('./timeline-task.js').run(config);
+  cli.input.splice(0, 1);
+  result = require('./timeline-task.js').run(config, cli.input);
 } else if (cli.input[0] === 'available') {
   result = require('./available-task.js').run(config);
 } else if (cli.input[0] === 'progress') {

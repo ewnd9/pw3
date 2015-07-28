@@ -1,11 +1,13 @@
-module.exports.run = function(config) {
+module.exports.run = function(config, input) {
   var moment = require('moment');
   var _ = require('lodash');
 
   var now = moment();
 
-  var twoWeekAgo = moment(now).add(-2, 'week');
-  var twoWeekFromNow = moment(now).add(+2, 'week');
+  var time = (!input || input.length !== 2) ? [2, 'week'] : input;
+
+  var twoWeekAgo = moment(now).add(time[0] * -1, time[1]);
+  var twoWeekFromNow = moment(now).add(time[0], time[1]);
 
   return require('./helpers/get-shows-task').run(config).then((_episodes) => {
     var episodes = require('./helpers/flat-episodes-filter').run(_episodes);
