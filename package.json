@@ -1,7 +1,7 @@
 {
   "name": "pw3",
   "version": "0.0.8",
-  "description": "Media Multiplexer",
+  "description": "Air dates, search on tpb and kickass, check watched episodes from cli",
   "scripts": {
     "transpile": "babel src --out-dir lib",
     "prepublish": "npm run transpile",
@@ -25,7 +25,10 @@
     "movies",
     "tv",
     "shows",
-    "cli"
+    "cli",
+    "thepiratebay",
+    "piratebay",
+    "kickass"
   ],
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",

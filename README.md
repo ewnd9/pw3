@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/ewnd9/pw3.svg?branch=master)](https://travis-ci.org/ewnd9/pw3)
 
-Media Multiplexer in cli
+> powerstreaming - watching several episodes of a TV show in a row, usually from an online streaming service. This can be done over several evenings, or a marathon weekend.
+
+Air dates, search on tpb and kickass, check watched episodes from cli
 
 ## Installation
 
@@ -21,7 +23,10 @@ $ pw3 --help
 
     # search torrents
     pw3 lost s01e01 720p
+
+    # range query
     pw3 daredevil s01e01-05 720p
+    
     # specify torrent-tracker [tpb|kickass]
     pw3 true detective s01e01 720p --adapter=kickass
 
@@ -36,6 +41,9 @@ $ pw3 --help
 
     # search all unwatched episodes torrents
     pw3 available
+
+    # check watched episodes
+    pw3 progress
 
   Notes
     You can manually edit your config in /home/ewnd9/.pw3-npm

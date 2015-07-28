@@ -20,7 +20,10 @@ var cli = meow({
     '',
     helpLine('# search torrents'),
     helpLine('pw3 lost s01e01 720p'),
+    '',
+    helpLine('# range query'),
     helpLine('pw3 daredevil s01e01-05 720p'),
+    '',
     helpLine('# specify torrent-tracker [tpb|kickass]'),
     helpLine('pw3 true detective s01e01 720p --adapter=kickass'),
     '',
@@ -35,6 +38,9 @@ var cli = meow({
     '',
     helpLine('# search all unwatched episodes torrents'),
     helpLine('pw3 available'),
+    '',
+    helpLine('# check watched episodes'),
+    helpLine('pw3 progress'),
     '',
     'Notes',
     helpLine('You can manually edit your config in ' + config.path)
@@ -62,6 +68,8 @@ if (isFirstRun || cli.flags.setup === true) {
   result = require('./timeline-task.js').run(config);
 } else if (cli.input[0] === 'available') {
   result = require('./available-task.js').run(config);
+} else if (cli.input[0] === 'progress') {
+  result = require('./progress-task.js').run(config);
 } else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
   cli.showHelp();
 } else {
@@ -76,5 +84,6 @@ if (result && typeof result.then === 'function') {
   result.catch((err) => {
     console.log('err');
     console.log(err);
+    console.log(err.stack);
   });
 }

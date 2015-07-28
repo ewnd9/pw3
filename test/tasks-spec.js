@@ -26,6 +26,11 @@ describe('tasksSpec', function() {
     test(lib.run(config, query));
   });
 
+  it('progressTask', function() {
+    var lib = require('./../src/progress-task');
+    test(lib.run(config));
+  });
+
   it('searchTask', function() {
     var lib = require('./../src/search-task');
     test(lib.run(config, 'tpb', query));
