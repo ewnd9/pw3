@@ -49,7 +49,10 @@ module.exports.run = function(config, query) {
           })
         }).then(function(answers) {
           var s = answers.season;
-          print.splitByToday(s.episodes.reverse());
+          print.splitByToday(s.episodes.reverse(), {
+            userCheck: true,
+            config: config
+          });
 
           // @TODO: pull request to inquirer to disable pagination
           // inquirer.prompt({

@@ -3,6 +3,7 @@ module.exports.run = function(config) {
   var _ = require('lodash');
 
   var now = moment();
+
   var twoWeekAgo = moment(now).add(-2, 'week');
   var twoWeekFromNow = moment(now).add(+2, 'week');
 
@@ -17,6 +18,9 @@ module.exports.run = function(config) {
       return x._date.unix();
     });
 
-    require('./utils/print-utils').splitByToday(sorted.reverse());
+    require('./utils/print-utils').splitByToday(sorted.reverse(), {
+      userCheck: true,
+      config: config
+    });
   });
 };

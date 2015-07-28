@@ -31,8 +31,8 @@ module.exports = (config) => {
     return _.last(_.sortByAll(showEntry.episodes, ['season', 'episode']));
   };
 
-  result.isEpisodeChecked = (show, episode) => {
-    var progressEntry = data[show.imdb];
+  result.isEpisodeChecked = (episode) => {
+    var progressEntry = data[episode.showImdb];
     if (!progressEntry) {
       return false;
     }
@@ -49,7 +49,7 @@ module.exports = (config) => {
     var unaired = 0;
 
     _.each(episodes, (episode) => {
-      if (result.isEpisodeChecked(show, episode)) {
+      if (result.isEpisodeChecked(episode)) {
         watched++;
       } else if (episode._date.isBefore(now)) {
         unwatched++;
@@ -82,7 +82,7 @@ module.exports = (config) => {
       unwatched = 0;
 
       _.each(season.episodes, (episode) => {
-        if (result.isEpisodeChecked(show, episode)) {
+        if (result.isEpisodeChecked(episode)) {
           watched++;
         } else {
           unwatched++;

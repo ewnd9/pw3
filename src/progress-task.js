@@ -66,7 +66,7 @@ module.exports.run = (config) => {
             return {
               name: printUtils.episodeFormat(episode),
               value: episode,
-              checked: watchedStorage.isEpisodeChecked(media, episode)
+              checked: watchedStorage.isEpisodeChecked(episode)
             };
           })
         }).then((answers) => {

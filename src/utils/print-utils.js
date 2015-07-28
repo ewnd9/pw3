@@ -17,8 +17,14 @@ module.exports.kv = function(key, value) {
   console.log(module.exports.kvFormat(key, value));
 };
 
-var episodeFormat = module.exports.episodeFormat = (episode, options = { omitShowTitle: false }) => {
-  var data = [episode._date.format('DD.MM.YYYY'), (!options.omitShowTitle && episode.showTitle) || '', episode.numericTitle];
+var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false, config: null }) => {
+  var data = [episode._date.format('DD.MM.YYYY'), (episode.showTitle) || '', episode.numericTitle];
+
+  if (options.userCheck && options.config) {
+    var watchedStorage = require('./../helpers/watched-storage')(options.config);
+    data = [watchedStorage.isEpisodeChecked(episode) ? '[x]' : '[ ]'].concat(data);
+  }
+
   var filtered = _.filter(data, s => s.length > 0);
 
   return module.exports.kvFormat(filtered.join(' '), episode.title);
@@ -28,7 +34,7 @@ module.exports.mediaFormat = (media) => {
   return `${media.title} (${media.year})`;
 };
 
-module.exports.splitByToday = function(episodes, title) {
+module.exports.splitByToday = function(episodes, options) {
   var moment = require('moment');
   var today = moment();
 
@@ -51,7 +57,7 @@ module.exports.splitByToday = function(episodes, title) {
       printToday();
     }
 
-    console.log(episodeFormat(episode));
+    console.log(episodeFormat(episode, options));
     prevDate = date;
   });
 
