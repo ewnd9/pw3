@@ -2,7 +2,7 @@ module.exports = (config) => {
   var _ = require('lodash');
   var moment = require('moment');
 
-  var data = config.data.preferences.progress = config.data.preferences.progress || {};
+  var data = config.data.progress = config.data.progress || {};
 
   var result = {};
 

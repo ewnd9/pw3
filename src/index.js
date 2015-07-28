@@ -2,7 +2,7 @@
 
 var isFirstRun = false; // dot-file-config logic error :(
 
-var config = require('dot-file-config')('.pw3-npm', __dirname + '/default-config.json', function() {
+var config = require('dot-file-config')('.pw3-npm', __dirname + '/../default-config.json', function() {
   isFirstRun = true;
 });
 
@@ -81,7 +81,7 @@ if (isFirstRun || cli.flags.setup === true) {
 } else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
   cli.showHelp();
 } else {
-  var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.preferences.adapter;
+  var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.adapter;
 
   result = require('./search-task.js').run(config, adapter, cli.input.join(' '), {
     c: cli.flags.c

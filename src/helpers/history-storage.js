@@ -1,9 +1,9 @@
 var _ = require('lodash');
 
 module.exports.process = (config, queryMatches) => {
-  config.data.preferences.searches = config.data.preferences.searches || [];
+  config.data.searches = config.data.searches || [];
 
-  var last = _.find(config.data.preferences.searches, function(item) {
+  var last = _.find(config.data.searches, function(item) {
     return item.title === queryMatches.title;
   });
 
@@ -15,14 +15,14 @@ module.exports.process = (config, queryMatches) => {
       last.ep = queryMatches.ep;
     }
   } else {
-    config.data.preferences.searches.push(queryMatches);
+    config.data.searches.push(queryMatches);
   }
 
   config.save();
 };
 
 module.exports.getImdb = (config, title) => {
-  var searches = config.data.preferences.searchesImdb = config.data.preferences.searchesImdb || [];
+  var searches = config.data.searchesImdb = config.data.searchesImdb || [];
   var last = _.find(searches, item => item.title === title);
 
   return last;

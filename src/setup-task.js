@@ -12,7 +12,7 @@ module.exports.run = function(config) {
 
   var q1 = {
     type: "list",
-    message: "Default adapter" + now(config.data.preferences.adapter),
+    message: "Default adapter" + now(config.data.adapter),
     name: "adapter",
     choices: _.map(adapters, function(adapter) {
       return {
@@ -21,11 +21,12 @@ module.exports.run = function(config) {
     })
   };
 
-  var programs = config.data['available-programs'];
+  var pjson = require('./../package.json');
+  var programs = pjson['app-data']['programs'];
 
   var q2 = {
     type: "list",
-    message: "Default program" + now(config.data.preferences.program),
+    message: "Default program" + now(config.data.program),
     name: "program",
     choices: _.map(programs, function(program) {
       var name = [
@@ -43,8 +44,8 @@ module.exports.run = function(config) {
   };
 
   return inquirer.prompt([q1, q2]).then(function(answers) {
-    config.data.preferences.adapter = answers.adapter;
-    config.data.preferences.program = answers.program;
+    config.data.adapter = answers.adapter;
+    config.data.program = answers.program;
     config.save();
   });
 };

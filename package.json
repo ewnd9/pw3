@@ -59,5 +59,21 @@
     "coveralls": "^2.11.3",
     "istanbul": "^0.3.17",
     "mocha": "^2.2.5"
+  },
+  "app-data": {
+    "programs": [
+      {
+        "name": "transmission-gtk",
+        "script": "transmission-gtk \"$arg\"",
+        "description": "Default ubuntu app",
+        "type": "exec"
+      },
+      {
+        "name": "peerflix",
+        "script": "peerflix \"$arg\" --vlc",
+        "description": "Torrent-streaming https://github.com/mafintosh/peerflix",
+        "type": "replace"
+      }
+    ]
   }
 }

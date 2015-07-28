@@ -34,7 +34,7 @@ var resolveSearches = function(config, unresolved) {
 };
 
 module.exports.run = function(config) {
-  var searches = config.data.preferences.searches = config.data.preferences.searches || [];
+  var searches = config.data.searches = config.data.searches || [];
 
   var unresolved = _.filter(searches, function(search) {
     return !search.imdb;
