@@ -6,6 +6,7 @@ module.exports.run = function(config, query) {
   var inquirer = require('inquirer-bluebird');
 
   var selectImdbTask = require('./helpers/select-imdb-task');
+  var mediaStorage = require('./helpers/media-storage');
 
   return selectImdbTask.run(config, query).then((m) => {
     if (m === 'Exit') {
@@ -32,7 +33,7 @@ module.exports.run = function(config, query) {
     }
 
     var showSeasons = function(m) {
-      imdb.searchByImdb(m.imdb).then(function(data) {
+      mediaStorage.getByImdb(m.imdb).then(function(data) {
         inquirer.prompt({
           type: "list",
           name: "season",

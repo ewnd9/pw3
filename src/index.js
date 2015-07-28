@@ -25,7 +25,7 @@ var cli = meow({
     helpLine('# range query'),
     helpLine('pw3 daredevil s01e01-05 720p'),
     '',
-    helpLine('# specify torrent-tracker [tpb|kickass]'),
+    helpLine('# specify torrent-tracker [tpb|kickass|eztv]'),
     helpLine('pw3 true detective s01e01 720p --adapter=kickass'),
     '',
     helpLine('# download subtitles to current dir'),
@@ -55,7 +55,14 @@ if (isFirstRun || cli.flags.setup === true) {
   result = require('./setup-task.js').run(config);
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
-  result = require('./info-task.js').run(config, cli.input.join(' '));
+  var query = cli.input.join(' ').trim();
+
+  if (query.length === 0) {
+    cli.showHelp();
+    process.exit(1);
+  }
+
+  result = require('./info-task.js').run(config, query);
 } else if (cli.input[0] === 'subtitles') {
   cli.input.splice(0, 1);
 
