@@ -66,6 +66,7 @@ $ pw3 --help
 - [Bug] Kickass give torrent link, not magnet
 - [Feature] https://github.com/bhagn/simple-shell
 - [Feature] https://github.com/alexbepple/node-transmission
+- [WIP] http://www.canistream.it/ integration
 
 ## Similar Projects
 
