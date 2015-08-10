@@ -75,8 +75,9 @@ module.exports.splitByToday = function(episodes, options) {
 
   var groups = _.groupBy(correctEpisodes, episode => episode._date.format(dateFormat));
 
-  options.relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
-    return Math.max(episode._date.fromNow().length, result);
+  var relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
+    var pattern = episode._date.isAfter(today) ? episode._date.fromNow().length : 0;
+    return Math.max(pattern, result);
   }, 0);
 
   options.showTitlePadding = _.reduce(correctEpisodes, (result, episode) => {
@@ -100,7 +101,13 @@ module.exports.splitByToday = function(episodes, options) {
         printToday();
       }
 
-      _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
+      if (date.isAfter(today)) {
+        options.relativeDatesPadding = relativeDatesPadding; // hm
+        _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
+      } else {
+        delete options.relativeDatesPadding;
+        _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
+      }
     }
 
     prevDate = date;
