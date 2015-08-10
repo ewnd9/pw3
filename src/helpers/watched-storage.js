@@ -45,7 +45,8 @@ module.exports = (function() {
 
   var now = moment();
 
-  result.getStats = (show, episodes) => {
+  result.getStats = (show, episodes, noColors = false) => {
+    var chalk = require('chalk');
     var watched = 0;
     var unwatched = 0;
     var unaired = 0;
@@ -53,20 +54,22 @@ module.exports = (function() {
     _.each(episodes, (episode) => {
       if (result.isEpisodeChecked(episode)) {
         watched++;
-      } else if (episode._date.isBefore(now)) {
+      } else if (episode._date.isValid() && episode._date.isBefore(now)) {
         unwatched++;
       } else {
         unaired++;
       }
     });
 
+    var colorString = (string, fn) => noColors ? string : fn(string);
+
     if (watched === episodes.length) {
       return 'watched: all';
     } else {
       // var s1 = '';
       var s1 = watched > 0 ? `watched: ${watched} episodes` : '';
-      var s2 = unwatched > 0 ? `unwatched: ${unwatched} episodes` : '';
-      var s3 = unaired > 0 ? `unaired: ${unaired} episodes` : '';
+      var s2 = unwatched > 0 ? colorString(`unwatched: ${unwatched} episodes`, chalk.red) : '';
+      var s3 = unaired > 0 ? colorString(`unaired: ${unaired} episodes`, chalk.gray) : '';
 
       return _.filter([s1, s2, s3], (s) => s.length > 0).join(', '); // @TODO: plurals
     }
