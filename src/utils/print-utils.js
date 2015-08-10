@@ -20,7 +20,7 @@ module.exports.kv = function(key, value) {
 var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false, relativeDatesPadding: false, showTitlePadding: false }) => {
   var data = [];
 
-  data.push(episode._date.format('DD.MM'));
+  data.push(episode._date.format('ddd DD.MM'));
 
   if (typeof options.relativeDatesPadding === 'number') {
     data.push(_.padLeft(episode._date.fromNow(), options.relativeDatesPadding));
@@ -75,7 +75,9 @@ module.exports.splitByToday = function(episodes, options) {
 
   var groups = _.groupBy(correctEpisodes, episode => episode._date.format(dateFormat));
 
-  var relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
+  var unairedOptions = _.clone(options);
+
+  unairedOptions.relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
     var pattern = episode._date.isAfter(today) ? episode._date.fromNow().length : 0;
     return Math.max(pattern, result);
   }, 0);
@@ -102,10 +104,8 @@ module.exports.splitByToday = function(episodes, options) {
       }
 
       if (date.isAfter(today)) {
-        options.relativeDatesPadding = relativeDatesPadding; // hm
-        _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
+        _.each(episodes, (episode) => console.log(episodeFormat(episode, unairedOptions)));
       } else {
-        delete options.relativeDatesPadding;
         _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
       }
     }

@@ -56,7 +56,6 @@ $ pw3 --help
 - [Feature] Copy-magnet-to-buffer
 - [Feature] Tv-show progress confirmation
 - [Feature] Relative dates in torrent-table
-- [Feature] Air dates with Day of Week
 - [Feature] Trakt.tv integration
 - [WIP] Something about making want-to-watch list
 - [Feature] Add tv-networks in timeline
