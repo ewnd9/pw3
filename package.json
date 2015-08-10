@@ -3,18 +3,14 @@
   "version": "0.2.0",
   "description": "Air dates, search on tpb, eztv or kickass, check watched episodes from cli",
   "scripts": {
-    "transpile": "babel src --out-dir lib",
-    "prepublish": "npm run transpile",
-    "postpublish": "rm -rf lib",
-    "prestart": "npm run transpile",
-    "start": "node lib/index.js",
+    "start": "node cli.js",
     "test": "mocha --require babel/register",
     "coverage": "istanbul cover _mocha src/index.js -- --require babel/register",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info"
   },
   "main": "lib/index.js",
-  "bin": "lib/index.js",
+  "bin": "cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ewnd9/pw3.git"
@@ -51,10 +47,10 @@
     "prompt": "^0.2.14",
     "request-promise": "^0.4.2",
     "spawn-args": "^0.1.0",
-    "thepiratebay": "^0.2.2"
+    "thepiratebay": "^0.2.2",
+    "babel": "^5.8.5"
   },
   "devDependencies": {
-    "babel": "^5.8.5",
     "chai": "^3.2.0",
     "coveralls": "^2.11.3",
     "istanbul": "^0.3.17",
