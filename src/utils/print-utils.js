@@ -9,8 +9,8 @@ var info = module.exports.info = function() {
   console.log(chalk.green(argsJoin(arguments)));
 };
 
-module.exports.kvFormat = function(key, value) {
-  return chalk.green(key + ':') + ' ' + value;
+module.exports.kvFormat = function(key, value, color = chalk.green) {
+  return color(key + ':') + ' ' + value;
 };
 
 module.exports.kv = function(key, value) {
@@ -34,14 +34,22 @@ var episodeFormat = module.exports.episodeFormat = (episode, options = { userChe
 
   data.push(episode.numericTitle);
 
+  var color = chalk.green;
+
   if (options.userCheck) {
     var watchedStorage = require('./../helpers/watched-storage');
-    data = [watchedStorage.isEpisodeChecked(episode) ? '[x]' : '[ ]'].concat(data);
+
+    if (watchedStorage.isEpisodeChecked(episode)) {
+      data = ['[x]'].concat(data);
+      color = (input) => input;
+    } else {
+      data = ['[ ]'].concat(data);
+    }
   }
 
   var filtered = _.filter(data, s => s.length > 0);
 
-  return module.exports.kvFormat(filtered.join(' '), episode.title);
+  return module.exports.kvFormat(filtered.join(' '), episode.title, color);
 };
 
 module.exports.mediaFormat = (media) => {
