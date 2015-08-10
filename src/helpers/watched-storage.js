@@ -71,7 +71,7 @@ module.exports = (function() {
       var s2 = unwatched > 0 ? colorString(`unwatched: ${unwatched} episodes`, chalk.red) : '';
       var s3 = unaired > 0 ? colorString(`unaired: ${unaired} episodes`, chalk.gray) : '';
 
-      return _.filter([s1, s2, s3], (s) => s.length > 0).join(', '); // @TODO: plurals
+      return _.filter([s2, s3, s1], (s) => s.length > 0).join(', '); // @TODO: plurals
     }
   };
 
