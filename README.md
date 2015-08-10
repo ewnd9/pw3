@@ -76,3 +76,5 @@ $ pw3 --help
 - https://github.com/arshad/subdb-cli subtitles downloader cli
 - https://github.com/arshad/kaizoku tpb cli
 - https://github.com/Munter/ezflix stream eztv to peerflix
+- https://github.com/maxogden/torrent download torrents with node from the CLI
+- https://github.com/SeekTheError/tbb-transmission

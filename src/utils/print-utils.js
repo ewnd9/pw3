@@ -17,8 +17,22 @@ module.exports.kv = function(key, value) {
   console.log(module.exports.kvFormat(key, value));
 };
 
-var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false }) => {
-  var data = [episode._date.format('DD.MM.YYYY'), (episode.showTitle) || '', episode.numericTitle];
+var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false, relativeDatesPadding: false, showTitlePadding: false }) => {
+  var data = [];
+
+  data.push(episode._date.format('DD.MM'));
+
+  if (typeof options.relativeDatesPadding === 'number') {
+    data.push(_.padLeft(episode._date.fromNow(), options.relativeDatesPadding));
+  }
+
+  if (typeof options.showTitlePadding === 'number') {
+    data.push(_.padLeft(episode.showTitle, options.showTitlePadding));
+  } else {
+    data.push(episode.showTitle);
+  }
+
+  data.push(episode.numericTitle);
 
   if (options.userCheck) {
     var watchedStorage = require('./../helpers/watched-storage');
@@ -41,23 +55,46 @@ module.exports.splitByToday = function(episodes, options) {
   var prevDate = null;
   var used = false;
 
+  var dateFormat = 'DD.MM';
+
   var printToday = function() {
-    info('==== today (' + (today.format('DD.MM.YYYY')) + ') ====');
+    info('=== today (' + (today.format(dateFormat)) + ') ===');
   };
 
-  _.each(episodes, function(episode) {
-    var date = episode._date;
-    var isDateValid = date.isValid() && date.year() > 1900;
+  var correctEpisodes = _.filter(episodes, (episode) => {
+    return episode._date.isValid() && episode._date.year() > 1900;
+  });
 
-    if (isDateValid && prevDate && prevDate.isAfter(today) && date.isBefore(today)) {
-      used = true;
+  var groups = _.groupBy(correctEpisodes, episode => episode._date.format(dateFormat));
+
+  options.relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
+    return Math.max(episode._date.fromNow().length, result);
+  }, 0);
+
+  options.showTitlePadding = _.reduce(correctEpisodes, (result, episode) => {
+    episode.showTitle = episode.showTitle || ''; // it's bad
+    return Math.max(episode.showTitle.length, result);
+  }, 0);
+
+  _.each(groups, function(episodes, dateString) {
+    var date = moment(dateString, dateFormat);
+
+    if (dateString === today.format(dateFormat)) {
       printToday();
-    } else if (isDateValid && !prevDate && date.isBefore(today)) {
-      used = true;
+      _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
       printToday();
+    } else {
+      if (prevDate && prevDate.isAfter(today) && date.isBefore(today)) {
+        used = true;
+        printToday();
+      } else if (!prevDate && date.isBefore(today)) {
+        used = true;
+        printToday();
+      }
+
+      _.each(episodes, (episode) => console.log(episodeFormat(episode, options)));
     }
 
-    console.log(episodeFormat(episode, options));
     prevDate = date;
   });
 
