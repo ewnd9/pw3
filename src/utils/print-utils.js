@@ -66,7 +66,7 @@ module.exports.splitByToday = function(episodes, options) {
   var dateFormat = 'DD.MM';
 
   var printToday = function() {
-    info('=== today (' + (today.format(dateFormat)) + ') ===');
+    info('=== today (' + (today.format('ddd ' + dateFormat)) + ') ===');
   };
 
   var correctEpisodes = _.filter(episodes, (episode) => {
@@ -82,10 +82,17 @@ module.exports.splitByToday = function(episodes, options) {
     return Math.max(pattern, result);
   }, 0);
 
-  options.showTitlePadding = _.reduce(correctEpisodes, (result, episode) => {
-    episode.showTitle = episode.showTitle || ''; // it's bad
-    return Math.max(episode.showTitle.length, result);
-  }, 0);
+  var showTitlePadding = (predicate) => {
+    return _.reduce(correctEpisodes, (result, episode) => {
+      episode.showTitle = episode.showTitle || ''; // it's bad
+
+      var pattern = predicate(episode) ? episode.showTitle.length : 0;
+      return Math.max(pattern, result);
+    }, 0);
+  };
+
+  unairedOptions.showTitlePadding = showTitlePadding(episode => episode._date.isAfter(today));
+  options.showTitlePadding = showTitlePadding(episode => !episode._date.isAfter(today));
 
   _.each(groups, function(episodes, dateString) {
     var date = moment(dateString, dateFormat);
