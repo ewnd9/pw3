@@ -8,7 +8,7 @@ var processUtils = require('./utils/process-utils');
 var nlpUtils = require('./utils/nlp-utils');
 var print = require('./utils/print-utils');
 
-var config = require('dot-file-config')('.pw3-npm');
+var config = require('./utils/config');
 
 module.exports.run = function(adapter, query, options) {
   adapter = adapter || 'tpb';

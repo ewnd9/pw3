@@ -4,7 +4,7 @@ var moment = require('moment');
 
 var _ = require('lodash');
 
-var config = require('dot-file-config')('.pw3-npm');
+var config = require('./utils/config');
 
 module.exports.run = () => {
 

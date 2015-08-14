@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 
-var isFirstRun = false; // dot-file-config logic error :(
-
-var config = require('dot-file-config')('.pw3-npm', __dirname + '/../default-config.json', function() {
-  isFirstRun = true;
-});
+var config = require('./utils/config');
 
 var meow = require('meow');
 var chalk = require('chalk');
@@ -51,7 +47,7 @@ var cli = meow({
 
 var result = null;
 
-if (isFirstRun || cli.flags.setup === true) {
+if (config.isFirstRun || cli.flags.setup === true) {
   result = require('./setup-task.js').run();
 } else if (cli.input[0] === 'info') {
   cli.input.splice(0, 1);
@@ -91,8 +87,6 @@ if (isFirstRun || cli.flags.setup === true) {
 
 if (result && typeof result.then === 'function') {
   result.catch((err) => {
-    console.log('err');
-    console.log(err);
-    console.log(err.stack);
+    console.err(err.stack);
   });
 }

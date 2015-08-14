@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var mediaStorage = require('./media-storage');
 
-var config = require('dot-file-config')('.pw3-npm');
+var config = require('./../utils/config');
 
 module.exports.getHistory = (title) => {
   var searches = config.data.searches = config.data.searches || [];

@@ -4,7 +4,7 @@ var imdb = require('./../api/imdb');
 
 var inquirer = require('inquirer-bluebird');
 
-var config = require('dot-file-config')('.pw3-npm');
+var config = require('./../utils/config');
 
 var resolveSearches = function(unresolved) {
   var f = function(request) {
