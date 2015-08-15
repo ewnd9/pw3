@@ -10,8 +10,7 @@ var helpLine = (command, comment) => {
 
 var cli = meow({
   help: [
-    'Examples',
-    '',
+    'Usage',
     helpLine('# configure default torrent-tracker and torrent programm'),
     helpLine('pw3 --setup'),
     '',
@@ -39,8 +38,8 @@ var cli = meow({
     helpLine('# check watched episodes'),
     helpLine('pw3 progress'),
     '',
-    'Notes',
-    helpLine('You can manually edit your config in ' + config.path)
+    'Data',
+    helpLine(config.path)
   ],
   pkg: '../package.json'
 });
@@ -87,6 +86,6 @@ if (config.isFirstRun || cli.flags.setup === true) {
 
 if (result && typeof result.then === 'function') {
   result.catch((err) => {
-    console.err(err.stack);
+    console.error(err.stack);
   });
 }

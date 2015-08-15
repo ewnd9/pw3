@@ -1,5 +1,6 @@
 var imdb = require('./api/imdb');
 var print = require('./utils/print-utils');
+var config = require('./utils/config');
 
 module.exports.run = function(query) {
   var _ = require('lodash');
@@ -19,18 +20,38 @@ module.exports.run = function(query) {
       print.kv('description', m.description);
       print.info('');
 
-      inquirer.prompt({
+      var choices = m.isShow ? ['Seasons'] : [];
+
+      if (!config.data.wantList[m.imdb]) {
+        choices.push('Add to "Want to watch"');
+      } else {
+        choices.push('Remove from "Want to watch"');
+      }
+
+      choices.push('Exit');
+
+      return inquirer.prompt({
         type: "list",
         name: "action",
         message: "Select action",
-        choices: (m.isShow ? ['Seasons'] : []).concat(['Exit'])
+        choices: choices
       }).then(function(answers) {
         var a = answers.action;
 
-        if (a === 'Seasons') {
-          showSeasons(m);
-        } else if (a === 'Exit') {
-          process.exit(1);
+        if (a.indexOf('Add to') === 0) {
+          config.data.wantList[m.imdb] = m;
+          config.save();
+
+          return true;
+        } else if (a.indexOf('Remove from') === 0) {
+          delete config.data.wantList[m.imdb];
+          config.save();
+
+          return true;
+        } else if (a === 'Seasons') {
+          return showSeasons(m);
+        } else {
+          return true;
         }
       });
     }
