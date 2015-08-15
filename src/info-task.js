@@ -15,6 +15,7 @@ module.exports.run = function(query) {
     } else {
       print.info('');
       print.kv('title', m.title);
+      print.kv('year', m.year);
       print.kv('url', m.url);
       print.kv('rating', m.rating);
       print.kv('description', m.description);
@@ -28,6 +29,7 @@ module.exports.run = function(query) {
         choices.push('Remove from "Want to watch"');
       }
 
+      choices.push('Search on torrents');
       choices.push('Exit');
 
       return inquirer.prompt({
@@ -48,6 +50,9 @@ module.exports.run = function(query) {
           config.save();
 
           return true;
+        } else if (a === 'Search on torrents') {
+          var query = m.isShow ? `${m.title} s01e01` : m.title;
+          return require('./helpers/search-with-postfix')(query);
         } else if (a === 'Seasons') {
           return showSeasons(m);
         } else {
