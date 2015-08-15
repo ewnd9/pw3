@@ -36,7 +36,7 @@
     "dot-file-config": "0.4.0",
     "download": "^4.1.4",
     "eztv": "0.0.10",
-    "inquirer-bluebird": "^1.0.1",
+    "inquirer-question": "^1.0.0",
     "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "meow": "^3.3.0",

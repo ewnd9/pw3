@@ -21,43 +21,43 @@ module.exports.run = function(query) {
       print.kv('description', m.description);
       print.info('');
 
-      var choices = m.isShow ? ['Seasons'] : [];
+      var choices = {};
 
-      if (!config.data.wantList[m.imdb]) {
-        choices.push('Add to "Want to watch"');
-      } else {
-        choices.push('Remove from "Want to watch"');
+      if (m.isShows) {
+        choices['Seasons'] = () => {
+          return showSeasons(m);
+        }
       }
 
-      choices.push('Search on torrents');
-      choices.push('Exit');
-
-      return inquirer.prompt({
-        type: "list",
-        name: "action",
-        message: "Select action",
-        choices: choices
-      }).then(function(answers) {
-        var a = answers.action;
-
-        if (a.indexOf('Add to') === 0) {
-          config.data.wantList[m.imdb] = m;
-          config.save();
-
-          return true;
-        } else if (a.indexOf('Remove from') === 0) {
+      if (config.data.wantList[m.imdb]) {
+        choices['Remove from "Want to watch"'] = function() {
           delete config.data.wantList[m.imdb];
           config.save();
 
           return true;
-        } else if (a === 'Search on torrents') {
-          var query = m.isShow ? `${m.title} s01e01` : m.title;
-          return require('./helpers/search-with-postfix')(query);
-        } else if (a === 'Seasons') {
-          return showSeasons(m);
-        } else {
+        };
+      } else {
+        choices['Add to "Want to watch"'] = function() {
+          config.data.wantList[m.imdb] = m;
+          config.save();
+
           return true;
-        }
+        };
+      }
+
+      choices['Search on torrents'] = function() {
+        var query = m.isShow ? `${m.title} s01e01` : m.title;
+        return require('./helpers/search-with-postfix')(query);
+      };
+
+      choices['Exit'] = function() {
+        return true;
+      };
+
+      return inquirer.prompt({
+        type: "list",
+        message: "Select action",
+        choices: choices
       });
     }
 
