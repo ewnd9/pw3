@@ -24,9 +24,7 @@ module.exports.run = function(query) {
       var choices = {};
 
       if (m.isShows) {
-        choices['Seasons'] = () => {
-          return showSeasons(m);
-        }
+        choices['Seasons'] = () => showSeasons(m);
       }
 
       if (config.data.wantList[m.imdb]) {
@@ -50,9 +48,7 @@ module.exports.run = function(query) {
         return require('./helpers/search-with-postfix')(query);
       };
 
-      choices['Exit'] = function() {
-        return true;
-      };
+      choices['Exit'] = () => true;
 
       return inquirer.prompt({
         type: "list",
