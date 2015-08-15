@@ -1,6 +1,6 @@
 var config = require('./utils/config');
 var _ = require('lodash');
-var inquirer = require('inquirer-bluebird');
+var inquirer = require('inquirer-question');
 
 module.exports.run = function() {
 

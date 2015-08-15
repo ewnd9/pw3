@@ -62,7 +62,7 @@ module.exports.run = function() {
       });
     });
 
-    return require('inquirer-bluebird').prompt({
+    return require('inquirer-question').prompt({
       type: 'list',
       name: 'query',
       message: 'Select season',

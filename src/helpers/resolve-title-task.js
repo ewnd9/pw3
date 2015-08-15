@@ -1,5 +1,5 @@
 var imdb = require('./../api/imdb');
-var inquirer = require('inquirer-bluebird');
+var inquirer = require('inquirer-question');
 
 var _ = require('lodash');
 

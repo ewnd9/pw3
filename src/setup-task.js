@@ -1,4 +1,4 @@
-var inquirer = require('inquirer-bluebird');
+var inquirer = require('inquirer-question');
 var _ = require('lodash');
 
 var pathUtils = require('./utils/path-utils');

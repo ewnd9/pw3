@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var inquirer = require('inquirer-bluebird');
+var inquirer = require('inquirer-question');
 var moment = require('moment');
 
 var _ = require('lodash');

@@ -4,7 +4,7 @@ var config = require('./utils/config');
 
 module.exports.run = function(query) {
   var _ = require('lodash');
-  var inquirer = require('inquirer-bluebird');
+  var inquirer = require('inquirer-question');
 
   var selectImdbTask = require('./helpers/select-imdb-task');
   var mediaStorage = require('./helpers/media-storage');

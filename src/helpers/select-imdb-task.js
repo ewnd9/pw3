@@ -1,5 +1,5 @@
 module.exports.run = (query) => {
-  var inquirer = require('inquirer-bluebird');
+  var inquirer = require('inquirer-question');
   var _ = require('lodash');
 
   var imdb = require('./../api/imdb');
