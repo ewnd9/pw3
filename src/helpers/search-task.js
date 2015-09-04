@@ -10,7 +10,7 @@ var print = require('./../utils/print-utils');
 
 var config = require('./../utils/config');
 
-module.exports = function(query, options) {
+var f = function(query, options, finish) {
   var adapter = 'tpb';
   options = options || {};
 
@@ -30,7 +30,7 @@ module.exports = function(query, options) {
     process.stdin.setEncoding('utf8');
   };
 
-  process.stdin.on('data', function (text) {
+  var onInput = (text) => {
     var index = parseInt(text);
     var r = result[index - 1];
 
@@ -50,14 +50,22 @@ module.exports = function(query, options) {
       processUtils[program.type](script);
 
       if (r.description.queryMatches) {
-        require('./helpers/history-storage').process(r.description.queryMatches);
+        require('./../helpers/history-storage').process(r.description.queryMatches);
       }
+
+      ioLoop(true);
+    } else if (text.trim() === 'exit') {
+      process.stdin.removeListener('data', onInput);
+      process.stdin.pause();
+      
+      finish();
     } else {
       print.info('wrong input');
+      ioLoop(true);
     }
+  };
 
-    ioLoop(true);
-  });
+  process.stdin.on('data', onInput);
 
   var filterBySubstrings = function(results, substrings) {
     return _.filter(results, function(val) {
@@ -88,7 +96,7 @@ module.exports = function(query, options) {
     });
   };
 
-  var tr = require('./utils/format-utils').tr;
+  var tr = require('./../utils/format-utils').tr;
 
   var searchRequests = null;
   var rangeQuery = nlpUtils.parseEpisodesRange(query);
@@ -142,5 +150,11 @@ module.exports = function(query, options) {
     }
 
     ioLoop();
+  });
+};
+
+module.exports = (query, options) => {
+  return new Promise((resolve, reject) => {
+    f(query, options, resolve);
   });
 };

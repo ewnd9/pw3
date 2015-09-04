@@ -9,6 +9,10 @@ module.exports = (cli) => {
 
   var curr = components[cli.input[0]];
 
+  if (!curr && query.length > 0) {
+    curr = components['search'];
+  }
+
   if (curr) {
     var args = _.map(curr.args, (arg) => arg === 'query' ? query : cli.flags[arg]);
 
