@@ -1,4 +1,4 @@
-var inquirer = require('inquirer-bluebird');
+var inquirer = require('inquirer-question');
 var config = require('./../utils/config');
 
 module.exports = (title) => {

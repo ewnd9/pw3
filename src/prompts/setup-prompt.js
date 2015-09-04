@@ -1,10 +1,10 @@
 var inquirer = require('inquirer-question');
 var _ = require('lodash');
 
-var pathUtils = require('./utils/path-utils');
-var config = require('./utils/config');
+var pathUtils = require('./../utils/path-utils');
+var config = require('./../utils/config');
 
-module.exports.run = function() {
+module.exports = function() {
   var now = function(value) {
     return value ? ' (now: ' + value + ')' : '';
   };
@@ -22,7 +22,7 @@ module.exports.run = function() {
     })
   };
 
-  var pjson = require('./../package.json');
+  var pjson = require('./../../package.json');
   var programs = pjson['app-data']['programs'];
 
   var q2 = {

@@ -44,48 +44,8 @@ var cli = meow({
   pkg: '../package.json'
 });
 
-var result = null;
-
-if (config.isFirstRun || cli.flags.setup === true) {
-  result = require('./setup-task.js').run();
-} else if (cli.input[0] === 'info') {
-  cli.input.splice(0, 1);
-  var query = cli.input.join(' ').trim();
-
-  if (query.length === 0) {
-    cli.showHelp();
-    process.exit(1);
-  }
-
-  result = require('./info-task.js').run(query);
-} else if (cli.input[0] === 'subtitles') {
-  cli.input.splice(0, 1);
-
-  if (!cli.flags.lang) {
-    cli.showHelp();
-    process.exit(1);
-  }
-
-  result = require('./subtitles-task.js').run(cli.input.join(' '), cli.flags.lang);
-} else if (cli.input[0] === 'timeline') {
-  cli.input.splice(0, 1);
-  result = require('./timeline-task.js').run(cli.input);
-} else if (cli.input[0] === 'available') {
-  result = require('./available-task.js').run();
-} else if (cli.input[0] === 'progress') {
-  result = require('./progress-task.js').run();
-} else if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
-  cli.showHelp();
+if (cli.input.length === 0 || cli.input.join('').trim().length === 0) {
+  require('./menu-entry')();
 } else {
-  var adapter = cli.flags.adapter ? cli.flags.adapter : config.data.adapter;
-
-  result = require('./search-task.js').run(adapter, cli.input.join(' '), {
-    c: cli.flags.c
-  });
-}
-
-if (result && typeof result.then === 'function') {
-  result.catch((err) => {
-    console.error(err.stack);
-  });
+  require('./cli-entry')(cli);
 }

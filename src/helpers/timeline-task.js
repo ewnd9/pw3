@@ -1,4 +1,4 @@
-module.exports.run = function(input) {
+module.exports = function(input) {
   var moment = require('moment');
   var _ = require('lodash');
 
@@ -9,8 +9,8 @@ module.exports.run = function(input) {
   var twoWeekAgo = moment(now).add(time[0] * -1, time[1]);
   var twoWeekFromNow = moment(now).add(time[0], time[1]);
 
-  return require('./helpers/get-shows-task').run().then((_episodes) => {
-    var episodes = require('./helpers/flat-episodes-filter').run(_episodes);
+  return require('./../helpers/get-shows-task').run().then((_episodes) => {
+    var episodes = require('./../helpers/flat-episodes-filter').run(_episodes);
 
     var filtered = _.filter(episodes, function(episode) {
       return episode._date.isAfter(twoWeekAgo) && episode._date.isBefore(twoWeekFromNow) && episode._date.isValid();
@@ -20,7 +20,7 @@ module.exports.run = function(input) {
       return x._date.unix();
     });
 
-    require('./utils/print-utils').splitByToday(sorted.reverse(), {
+    require('./../utils/print-utils').splitByToday(sorted.reverse(), {
       userCheck: true
     });
   });

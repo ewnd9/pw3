@@ -1,15 +1,15 @@
-module.exports.run = (query, lang) => {
+module.exports = (query, lang) => {
   var Promise = require('bluebird');
   var opensrt = require('opensrt_js');
   var OpenSRT = Promise.promisifyAll(new opensrt('OSTestUserAgent')); // @TODO: new user agent
 
   var _ = require('lodash');
 
-  var nlpUtils = require('./utils/nlp-utils');
-  var print = require('./utils/print-utils');
-  var formatEpisode = require('./utils/format-utils').formatEpisode;
+  var nlpUtils = require('./../utils/nlp-utils');
+  var print = require('./../utils/print-utils');
+  var formatEpisode = require('./../utils/format-utils').formatEpisode;
 
-  var selectImdbTask = require('./helpers/select-imdb-task');
+  var selectImdbTask = require('./../helpers/select-imdb-task');
   var Download = require('download');
 
   var rangeQuery = nlpUtils.parseEpisodesRange(query);

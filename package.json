@@ -30,13 +30,15 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel": "^5.8.5",
     "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
     "cli-table": "^0.3.1",
     "dot-file-config": "0.4.0",
     "download": "^4.1.4",
     "eztv": "0.0.10",
-    "inquirer-question": "^1.0.0",
+    "inquirer-menu": "^0.1.2",
+    "inquirer-question": "^1.1.1",
     "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "meow": "^3.3.0",
@@ -47,8 +49,7 @@
     "prompt": "^0.2.14",
     "request-promise": "^0.4.2",
     "spawn-args": "^0.1.0",
-    "thepiratebay": "^0.2.2",
-    "babel": "^5.8.5"
+    "thepiratebay": "^0.2.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",

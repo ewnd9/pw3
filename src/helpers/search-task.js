@@ -4,14 +4,14 @@ var Table = require('cli-table');
 var sys = require('sys');
 var Promise = require('bluebird');
 
-var processUtils = require('./utils/process-utils');
-var nlpUtils = require('./utils/nlp-utils');
-var print = require('./utils/print-utils');
+var processUtils = require('./../utils/process-utils');
+var nlpUtils = require('./../utils/nlp-utils');
+var print = require('./../utils/print-utils');
 
-var config = require('./utils/config');
+var config = require('./../utils/config');
 
-module.exports.run = function(adapter, query, options) {
-  adapter = adapter || 'tpb';
+module.exports = function(query, options) {
+  var adapter = 'tpb';
   options = options || {};
 
   var table = new Table({
@@ -35,7 +35,7 @@ module.exports.run = function(adapter, query, options) {
     var r = result[index - 1];
 
     if (r) {
-      var pjson = require('./../package.json');
+      var pjson = require('./../../package.json');
       var programs = pjson['app-data']['programs'];
 
       var program = _.find(programs, function(program) {
@@ -70,9 +70,9 @@ module.exports.run = function(adapter, query, options) {
   };
 
   var adapters = {
-    tpb: require('./adapters/tpb-adapter'),
-    kickass: require('./adapters/kickass-adapter'),
-    eztv: require('./adapters/eztv-adapter')
+    tpb: require('./../adapters/tpb-adapter'),
+    kickass: require('./../adapters/kickass-adapter'),
+    eztv: require('./../adapters/eztv-adapter')
   }
 
   var search = function(query, description) {
