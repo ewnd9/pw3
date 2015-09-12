@@ -36,5 +36,5 @@ module.exports.query = (query) => {
         return _.flatten(results);
       });
     }
-  });
+  }).catch(console.log.bind(console));
 };
