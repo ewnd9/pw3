@@ -12,6 +12,6 @@ module.exports = (title) => {
     var print = require('./../utils/print-utils');
     print.info('Searching "' + query + '"');
 
-    return require('./../search-task').run(config.data.adapter, query);
+    return require('./search-task')(query);
   });
 }

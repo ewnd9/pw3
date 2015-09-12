@@ -28,7 +28,7 @@ module.exports = () => {
         }).then((answers) => {
           var userInput = answers.title;
 
-          return require('./helpers/resolve-title-task').run(userInput).then((media) => {
+          return require('./../helpers/resolve-title-task').run(userInput).then((media) => {
             historyStorage.setImdb(userInput, media.imdb);
             return true;
           });
