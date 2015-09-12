@@ -11,7 +11,7 @@ var print = require('./../utils/print-utils');
 var config = require('./../utils/config');
 
 var f = function(query, options, finish) {
-  var adapter = 'tpb';
+  var adapter = config.data.adapter;
   options = options || {};
 
   var table = new Table({
@@ -57,7 +57,7 @@ var f = function(query, options, finish) {
     } else if (text.trim() === 'exit') {
       process.stdin.removeListener('data', onInput);
       process.stdin.pause();
-      
+
       finish();
     } else {
       print.info('wrong input');

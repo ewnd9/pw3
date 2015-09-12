@@ -39,7 +39,6 @@
     "eztv": "git://github.com/ewnd9/node-eztv.git#337fb434fe31d6096eccbef0c57dead54d5faebf",
     "inquirer-menu": "^0.1.2",
     "inquirer-question": "^1.1.1",
-    "kexec": "^1.2.0",
     "lodash": "^3.2.0",
     "meow": "^3.3.0",
     "moment": "^2.10.3",
