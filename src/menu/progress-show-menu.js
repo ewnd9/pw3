@@ -35,7 +35,9 @@ module.exports = (media) => {
       });
 
       return checkEpisodes(media, filtered);
-    }
+    };
+
+    return menu;
   };
 
 };
