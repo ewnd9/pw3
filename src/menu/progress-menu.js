@@ -15,6 +15,10 @@ module.exports = () => {
 
       _.each(shows, (show) => {
         var episodes = utils.flattenEpisodes(show);
+        if (show.isMovie) {
+          return; // @TODO hack, should be not movies at all
+        }
+
         var stats = watchedStorage.getStats(show, episodes);
 
         menu.choices[`${show.title} | ${stats}`] = () => require('./progress-show-menu')(show);
