@@ -1,4 +1,4 @@
-var tr = (s, n) => (s.length >= n) ? s : tr('0' + s, n);
+var tr = (s, n) => (String(s).length >= n) ? s : tr('0' + s, n);
 
 module.exports.tr = tr;
 
