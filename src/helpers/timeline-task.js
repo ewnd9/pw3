@@ -4,7 +4,7 @@ module.exports = function(input) {
 
   var now = moment();
 
-  var time = (!input || input.length !== 2) ? [2, 'week'] : input;
+  var time = (!input || input.length === 0) ? [2, 'week'] : input.split(' ');
 
   var twoWeekAgo = moment(now).add(time[0] * -1, time[1]);
   var twoWeekFromNow = moment(now).add(time[0], time[1]);
