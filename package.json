@@ -33,7 +33,6 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel": "^5.8.5",
     "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
     "cli-table": "^0.3.1",
@@ -54,6 +53,7 @@
     "thepiratebay": "^0.2.2"
   },
   "devDependencies": {
+    "babel": "^5.8.5",
     "chai": "^3.2.0",
     "coveralls": "^2.11.3",
     "istanbul": "^0.3.17",
