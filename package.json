@@ -4,6 +4,9 @@
   "description": "Air dates, search on tpb, eztv or kickass, check watched episodes from cli",
   "scripts": {
     "start": "node cli.js",
+    "build": "babel -d lib src",
+    "prepublish": "npm run build",
+    "postpublish": "rm -rf lib",
     "test": "mocha --require babel/register",
     "coverage": "istanbul cover _mocha src/index.js -- --require babel/register",
     "precoveralls": "npm run coverage",
