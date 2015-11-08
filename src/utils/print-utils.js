@@ -17,6 +17,10 @@ module.exports.kv = function(key, value) {
   console.log(module.exports.kvFormat(key, value));
 };
 
+/**
+ * episode should be like
+ * { _date: <Moment>, showTitle: <String>, numericTitle: <String>, title: <String> }
+ */
 var episodeFormat = module.exports.episodeFormat = (episode, options = { userCheck: false, relativeDatesPadding: false, showTitlePadding: false }) => {
   var data = [];
 
@@ -37,9 +41,16 @@ var episodeFormat = module.exports.episodeFormat = (episode, options = { userChe
   var color = chalk.green;
 
   if (options.userCheck) {
-    var watchedStorage = require('./../helpers/watched-storage');
+    var watched = false;
 
-    if (watchedStorage.isEpisodeChecked(episode)) {
+    if (typeof episode.watched !== undefined) {
+      watched = episode.watched;
+    } else {
+      var watchedStorage = require('./../helpers/watched-storage');
+      watched = watchedStorage.isEpisodeChecked(episode);
+    }
+
+    if (watched) {
       data = ['[x]'].concat(data);
       color = (input) => input;
     } else {
@@ -49,13 +60,17 @@ var episodeFormat = module.exports.episodeFormat = (episode, options = { userChe
 
   var filtered = _.filter(data, s => s.length > 0);
 
-  return module.exports.kvFormat(filtered.join(' '), episode.title, color);
+  return module.exports.kvFormat(filtered.join(' '), episode.afterToday ? '<title hidden>' : episode.title, color);
 };
 
 module.exports.mediaFormat = (media) => {
   return `${media.title} (${media.year})`;
 };
 
+/**
+ * episodes should be like
+ * { _date: <Moment>, showTitle: <String>, numericTitle: <String>, title: <String> }
+ */
 module.exports.splitByToday = function(episodes, options) {
   var moment = require('moment');
   var today = moment();
@@ -69,8 +84,11 @@ module.exports.splitByToday = function(episodes, options) {
     info('=== today (' + (today.format('ddd ' + dateFormat)) + ') ===');
   };
 
-  var correctEpisodes = _.filter(episodes, (episode) => {
+  var correctEpisodes = episodes.filter((episode) => {
     return episode._date.isValid() && episode._date.year() > 1900;
+  }).map((episode) => {
+    episode.afterToday = episode._date.isAfter(today);
+    return episode;
   });
 
   var groups = _.groupBy(correctEpisodes, episode => episode._date.format(dateFormat));
@@ -78,7 +96,7 @@ module.exports.splitByToday = function(episodes, options) {
   var unairedOptions = _.clone(options);
 
   unairedOptions.relativeDatesPadding = _.reduce(correctEpisodes, (result, episode) => {
-    var pattern = episode._date.isAfter(today) ? episode._date.fromNow().length : 0;
+    var pattern = episode.afterToday ? episode._date.fromNow().length : 0;
     return Math.max(pattern, result);
   }, 0);
 

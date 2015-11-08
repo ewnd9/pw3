@@ -77,3 +77,4 @@ $ pw3 --help
 - https://github.com/Munter/ezflix stream eztv to peerflix
 - https://github.com/maxogden/torrent download torrents with node from the CLI
 - https://github.com/SeekTheError/tbb-transmission
+- https://github.com/schizoduckie/DuckieTV/ nw.js based desktop app with trakt and utorrent integrations

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node cli.js",
     "build": "babel -d lib src",
+    "build:watch": "babel --watch -d lib src",
     "prepublish": "npm run build",
     "postpublish": "rm -rf lib",
     "test": "mocha --require babel/register",
@@ -33,6 +34,7 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.0.16",
     "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
     "cli-table": "^0.3.1",

@@ -23,7 +23,7 @@ module.exports = {
     args: ['query', 'langs']
   },
   timeline: {
-    path: './helpers/timeline-task.js',
+    path: './helpers/timeline-trakt-task.js',
     type: 'task',
     args: ['query']
   },
