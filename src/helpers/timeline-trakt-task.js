@@ -48,7 +48,7 @@ export default (input) => {
 			return episode;
 		});
 
-		Promise.reduce(Object.keys(shows), (total, curr) => {
+		Promise.map(Object.keys(shows), (curr) => {
 			return traktHistory(curr).then((result) => {
 				var response = JSON.parse(result);
 				response.forEach((episode) => {
@@ -64,7 +64,7 @@ export default (input) => {
 					}
 				});
 			});
-		}, {}).then(() => {
+		}, { concurrency: 5 }).then(() => {
 			printUtils.splitByToday(episodes.reverse(), {
 				userCheck: true
 			});
