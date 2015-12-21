@@ -52,19 +52,23 @@ var prettyFormat = module.exports.prettyFormat = function(item) {
   }
 };
 
-var searchRaw = module.exports.searchRaw = function(query) {
+/**
+ * @type "TV" "M" "TVE"
+ */
+var searchRaw = module.exports.searchRaw = function(query, type) {
   var params = {
     title: query,
     limit: 10,
+    filter: type
   };
-
+  
   return request({ url: 'http://www.myapifilms.com/imdb', qs: params }).then(function(body) {
     return JSON.parse(body);
   });
 };
 
-module.exports.search = function(query) {
-  return searchRaw(query).then((data) => {
+module.exports.search = function(query, type) {
+  return searchRaw(query, type).then((data) => {
     return _.map(data, function(item) {
       return prettyFormat(item);
     });
