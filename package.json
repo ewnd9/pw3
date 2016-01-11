@@ -1,6 +1,6 @@
 {
   "name": "pw3",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "description": "Air dates, search on tpb, eztv or kickass, check watched episodes from cli",
   "scripts": {
     "start": "node cli.js",
