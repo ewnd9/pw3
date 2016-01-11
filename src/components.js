@@ -27,6 +27,11 @@ module.exports = {
     type: 'task',
     args: ['query']
   },
+  schedule: {
+    path: './helpers/schedule-trakt-task.js',
+    type: 'task',
+    args: ['query']
+  },
   setup: {
     path: './prompts/setup-prompt.js',
     type: 'task'

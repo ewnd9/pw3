@@ -40,6 +40,9 @@ $ pw3 --help
     # show all watching shows air dates
     pw3 timeline
 
+    # show all watching shows air dates in report style
+    pw3 schedule
+
     # search all unwatched episodes torrents
     pw3 available
 
