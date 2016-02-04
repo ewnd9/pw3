@@ -8,10 +8,7 @@
     "build:watch": "babel --watch -d lib src",
     "prepublish": "npm run build",
     "postpublish": "rm -rf lib",
-    "test": "mocha --require babel/register",
-    "coverage": "istanbul cover _mocha src/index.js -- --require babel/register",
-    "precoveralls": "npm run coverage",
-    "coveralls": "coveralls < coverage/lcov.info"
+    "test": "mocha --require babel/register"
   },
   "main": "lib/index.js",
   "bin": "cli.js",
@@ -21,38 +18,21 @@
   },
   "keywords": [
     "torrent",
-    "imdb",
     "movies",
     "tv",
     "shows",
     "cli",
-    "thepiratebay",
-    "piratebay",
-    "kickass",
-    "subtitles"
+    "kickass"
   ],
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.0.16",
-    "bluebird": "^2.9.30",
-    "chalk": "^1.0.0",
-    "cli-table": "^0.3.1",
-    "dot-file-config": "0.4.0",
-    "download": "^4.1.4",
-    "eztv": "git://github.com/ewnd9/node-eztv.git#337fb434fe31d6096eccbef0c57dead54d5faebf",
-    "inquirer-menu": "^0.1.2",
-    "inquirer-question": "^1.1.1",
-    "lodash": "^3.2.0",
+    "copy-paste": "^1.1.4",
+    "got": "^6.1.1",
+    "inquirer-bluebird": "^1.0.6",
     "meow": "^3.3.0",
-    "moment": "^2.10.3",
-    "node-kickass-json": "^0.1.1",
-    "opensrt_js": "git://github.com/ewnd9/OpenSRTJS.git#0cf6631f07725877ca13a3022b5ecf7d20188708",
-    "pretty-bytes": "^2.0.1",
-    "prompt": "^0.2.14",
-    "request-promise": "^0.4.2",
-    "spawn-args": "^0.1.0",
-    "thepiratebay": "^0.2.2"
+    "pretty-bytes": "^2.0.1"
   },
   "devDependencies": {
     "babel": "^5.8.5",
@@ -60,21 +40,5 @@
     "coveralls": "^2.11.3",
     "istanbul": "^0.3.17",
     "mocha": "^2.2.5"
-  },
-  "app-data": {
-    "programs": [
-      {
-        "name": "transmission-gtk",
-        "script": "transmission-gtk \"$arg\"",
-        "description": "Default ubuntu app",
-        "type": "exec"
-      },
-      {
-        "name": "peerflix",
-        "script": "peerflix \"$arg\" --vlc",
-        "description": "Torrent-streaming https://github.com/mafintosh/peerflix",
-        "type": "replace"
-      }
-    ]
   }
 }

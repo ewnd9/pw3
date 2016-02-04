@@ -53,23 +53,6 @@ $ pw3 --help
     You can manually edit your config in /home/ewnd9/.pw3-npm
 ```
 
-## Roadmap
-
-- [Feature] Download-torrent-file  
-- [Feature] Copy-magnet-to-buffer
-- [Feature] Tv-show progress confirmation
-- [Feature] Relative dates in torrent-table
-- [Feature] Trakt.tv integration
-- [WIP] Something about making want-to-watch list
-- [Feature] Add tv-networks in timeline
-- [WIP] Split info cli and lib packages
-- [Bug] Show error message on piratebay down
-- [Bug] Fix closing transmission on pw3 exiting
-- [Bug] Kickass give torrent link, not magnet
-- [Feature] https://github.com/bhagn/simple-shell
-- [Feature] https://github.com/alexbepple/node-transmission
-- [WIP] http://www.canistream.it/ integration
-
 ## Similar Projects
 
 - https://github.com/ziacik/lumus auto-loader to transmission, local webservice
@@ -81,3 +64,7 @@ $ pw3 --help
 - https://github.com/maxogden/torrent download torrents with node from the CLI
 - https://github.com/SeekTheError/tbb-transmission
 - https://github.com/schizoduckie/DuckieTV/ nw.js based desktop app with trakt and utorrent integrations
+
+## License
+
+MIT © [ewnd9](http://ewnd9.com)
