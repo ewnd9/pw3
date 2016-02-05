@@ -23,16 +23,18 @@ try {
 } catch (e) {
 }
 
+console.log('\n', query.join('\n'), '\n');
+
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout));
-const callApi = (query, index) => delay(index * 200).then(() => kickass(query.replace(/\W/, '')));
+const callApi = (query, index) => delay(index * 200).then(() => kickass(query.replace(/\W/, '')).then(data => ({ data, query })));
 
 interactive(query.map(callApi), fn).catch(err => console.log(err));
 
-function fn(data) {
+function fn({ data, query }) {
   return inquirer.prompt({
     type: 'list',
     name: 'uri',
-    message: '?',
+    message: query,
     pageSize: 10,
     choices: data.map(_ => ({ name: _.name, value: _.hash }))
   })
