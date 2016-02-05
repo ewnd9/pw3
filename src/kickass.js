@@ -1,7 +1,7 @@
 const got = require('got');
 const prettyBytes = require('pretty-bytes');
 
-export default query => got('http://kat.cr/json.php', {
+export default query => got('https://kat.cr/json.php', {
   query: { q: query },
   json: true,
   timeout: 2000

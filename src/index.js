@@ -24,10 +24,9 @@ try {
 }
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout));
+const callApi = (query, index) => delay(index * 200).then(() => kickass(query.replace(/\W/, '')));
 
-interactive(query.map((query, index) => delay(index * 200).then(() => kickass(query))), fn)
-.then(data => console.log(data))
-.catch(err => console.log(err));
+interactive(query.map(callApi), fn).catch(err => console.log(err));
 
 function fn(data) {
   return inquirer.prompt({
