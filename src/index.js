@@ -2,16 +2,18 @@ const meow = require('meow');
 const inquirer = require('inquirer-bluebird');
 const kickass = require('./kickass');
 const interactive = require('./promise-interactive');
+const expandQuery = require('./expand-query');
 
 const cli = meow({
   help: `
     Usage
 
     # search torrents
-    pw3 lost s01e01 720p
+    $ pw3 lost s01e01 720p
 
     # range query
-    pw3 daredevil s01e01-05 720p
+    $ pw3 daredevil s01e01-05 720p
+    $ pw3 daredevil s01e01-s01e05 720p
   `,
   pkg: '../package.json'
 });
@@ -23,12 +25,21 @@ try {
 } catch (e) {
 }
 
-console.log('\n', query.join('\n'), '\n');
+if (query.length === 1) {
+  query = expandQuery.expandEpisodesRange(query[0]);
+}
+
+console.log('\n' + query.join('\n') + '\n');
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout));
-const callApi = (query, index) => delay(index * 200).then(() => kickass(query.replace(/\W/, '')).then(data => ({ data, query })));
+const callApi = (query, index) => delay(index * 200).then(() => kickass(query.replace(/\'/g, '')).then(data => ({ data, query })));
 
-interactive(query.map(callApi), fn).catch(err => console.log(err));
+interactive(query.map(callApi), fn)
+  .then(data => process.exit(0)) // idk
+  .catch(err => {
+    console.log(err, err.stack);
+    process.exit(1);
+  });
 
 function fn({ data, query }) {
   return inquirer.prompt({

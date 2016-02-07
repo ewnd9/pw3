@@ -4,7 +4,7 @@
 
 > powerstreaming - watching several episodes of a TV show in a row, usually from an online streaming service. This can be done over several evenings, or a marathon weekend.
 
-Air dates, search on tpb, eztv or kickass, check watched episodes from cli
+Search releases on kat.cr from CLI
 
 ## Installation
 
@@ -17,40 +17,14 @@ $ npm install -g pw3
 ```
 $ pw3 --help
 
-  Examples
+  Usage
 
-    # configure default torrent-tracker and torrent programm
-    pw3 --setup
+  # search torrents
+  $ pw3 lost s01e01 720p
 
-    # search torrents
-    pw3 lost s01e01 720p
-
-    # range query
-    pw3 daredevil s01e01-05 720p
-
-    # specify torrent-tracker [tpb|kickass]
-    pw3 true detective s01e01 720p --adapter=kickass
-
-    # download subtitles to current dir
-    pw3 subtitles daredevil s01e01-05 --lang="en"
-
-    # description, air date of episodes
-    pw3 info "sillicon valley"
-
-    # show all watching shows air dates
-    pw3 timeline
-
-    # show all watching shows air dates in report style
-    pw3 schedule
-
-    # search all unwatched episodes torrents
-    pw3 available
-
-    # check watched episodes
-    pw3 progress
-
-  Notes
-    You can manually edit your config in /home/ewnd9/.pw3-npm
+  # range query
+  $ pw3 daredevil s01e01-05 720p
+  $ pw3 daredevil s01e01-s01e05 720p
 ```
 
 ## Similar Projects

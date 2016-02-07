@@ -8,7 +8,8 @@
     "build:watch": "babel --watch -d lib src",
     "prepublish": "npm run build",
     "postpublish": "rm -rf lib",
-    "test": "mocha --require babel/register"
+    "test": "mocha --require babel/register",
+    "test:watch": "mocha --watch --require babel/register"
   },
   "main": "lib/index.js",
   "bin": "cli.js",
@@ -32,7 +33,8 @@
     "got": "^6.1.1",
     "inquirer-bluebird": "^1.0.6",
     "meow": "^3.3.0",
-    "pretty-bytes": "^2.0.1"
+    "pretty-bytes": "^2.0.1",
+    "show-episode-format": "^1.0.2"
   },
   "devDependencies": {
     "babel": "^5.8.5",

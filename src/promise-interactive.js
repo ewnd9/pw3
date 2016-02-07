@@ -1,24 +1,19 @@
 export default (promises, fn) => new Promise(resolve => {
-  const queue = [];
+  let result = Promise.resolve();
   let i = 0;
 
-  promises.map(promise => promise.then(data => {
-    const f = () => fn(data).then(() => {
-      queue.shift();
-      i++;
-
-      if (i === promises.length) {
-        resolve('YO');
-      } else if (queue.length > 0) {
-        queue.shift()();
+  const acc = data => {
+    result = result.then(() => fn(data).then(() => {
+      if (++i === promises.length) {
+        resolve();
       }
-    });
+    }));
+  };
 
-    if (queue.length === 0) {
-      queue.push(1);
-      f();
-    } else {
-      queue.push(f);
+  promises.map(promise => promise.then(acc, err => {
+    console.log(err);
+    if (++i === promises.length) {
+      resolve();
     }
   }));
 });
